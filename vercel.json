@@ -8,6 +8,5 @@
         "includeFiles": ["db.json"]
       }
     }
-  ],
- 
+  ]
 }
