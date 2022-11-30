@@ -31,7 +31,7 @@ export const ProductRatingSwiper = styled(Swiper)`
       margin: 0 2rem;
       padding: 1rem;
       transform: scale(1.3);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
       box-shadow: 0 5px 15px -8px rgb(0 0 0 / 24%),
         0 8px 10px -5px rgba(0 0 0 / 100%);
     }
@@ -44,26 +44,26 @@ export const ProductRatingSwiper = styled(Swiper)`
       .product_rating_content {
         color: #fff;
         transform: scale(1.2);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
       }
       .product_rating_avatar {
         box-shadow: 0 5px 15px -8px rgb(0 0 0 / 24%),
           0 8px 10px -5px rgba(0 0 0 / 100%);
         margin: -50px 0 10px 0;
         transform: scale(1.8);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
       }
       .product_rating_author_name {
         filter: brightness(200%);
         margin: 25px 0 10px 0;
         text-shadow: 2px 2px 3px rgb(0 0 0 / 100%);
         transform: scale(1.5);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
       }
       .product_user_rating {
         margin: 0px 0 10px 0;
         transform: scale(1.8);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
         .anticon-star {
           cursor: grab;
           box-shadow: 0 5px 15px -8px rgb(0 0 0 / 24%),
@@ -73,14 +73,14 @@ export const ProductRatingSwiper = styled(Swiper)`
       .product_rating_time {
         margin: 5px 0px;
         transform: scale(1.2);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
         text-shadow: 2px 2px 3px rgb(0 0 0 / 100%);
         color: rgba(255, 255, 255, 80%);
       }
       .product_rating_content {
         margin: 5px 0 5px 0;
         transform: scale(1.1);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
         text-shadow: 2px 2px 3px rgb(0 0 0 / 100%);
         font-size: 0.75rem;
         -webkit-line-clamp: 2;
