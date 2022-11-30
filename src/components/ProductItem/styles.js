@@ -7,10 +7,12 @@ export const ProductContainer = styled.div`
   background-color: #fff;
   &:hover {
     box-shadow: rgb(149 157 165 / 50%) 0px 8px 24px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
     &:hover {
       h3,
       .product_category h4 {
         color: royalblue;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
       }
     }
   }
@@ -28,6 +30,7 @@ export const ProductContainer = styled.div`
     .hidden_img {
       display: ${(props) => (props.imageChange ? "block" : "none")};
       opacity: ${(props) => (props.imageChange ? 1 : 0)};
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
     }
     .product_list_img {
       max-width: 100%;

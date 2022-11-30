@@ -9,13 +9,13 @@ export const BlogListWrapper = styled.div`
     }
     .blog_list_img {
       transform: scale(1.2);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 1000ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
     .blog_list_content {
       margin-left: 40px;
       padding-right: 34px;
       transform: translateX(20px);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
   }
   @media ${DEVICE.MOBILE_SM} {
@@ -27,7 +27,7 @@ export const BlogListWrapper = styled.div`
         margin-top: 20px;
         padding-bottom: 20px;
         transform: translateY(20px);
-        transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        transition: all 1000ms cubic-bezier(0.34, 1.61, 0.7, 1);
       }
     }
     .blog_list_content {
@@ -121,7 +121,7 @@ export const BlogListHomePageWrapper = styled.div`
   &:hover {
     .manage_listing_top {
       transform: translateY(-40%);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
   }
   .manage_listing_top {
@@ -133,7 +133,7 @@ export const BlogListHomePageWrapper = styled.div`
     border-radius: 6px;
     color: #fff;
     margin: 0 15px;
-    transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     z-index: 3;
     background: transparent;
     border-bottom: none;
@@ -260,12 +260,12 @@ export const BlogFeatureWrapper = styled.div`
     padding: 21px 31px;
     .img_100 {
       transform: scale(1.2);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
     .blog_feature_content {
       margin-bottom: 30px;
       transform: translateY(30px);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
       .blog_content {
         display: -webkit-box;
         img {
@@ -357,11 +357,11 @@ export const SmBlogFeatureWrapper = styled.div`
     padding: 10px 12px;
     .img_35 {
       transform: scale(1.2);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
     .blog_feature_content {
       transform: translateX(15px);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 1000ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
   }
   background-color: #fff;

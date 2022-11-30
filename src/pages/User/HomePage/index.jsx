@@ -302,7 +302,7 @@ const UserHomePage = () => {
             <S.ContainerTiltle>
               <span className="title_underline">Bài Viết mới nhất</span>
             </S.ContainerTiltle>
-            <Row style={{ textAlign: "center" }}>
+            <Row style={{ textAlign: "center", marginTop: "30px" }}>
               <Col span={2}></Col>
               <Col span={20}>
                 <Row gutter={[16, 16]}>{renderBlogList}</Row>
