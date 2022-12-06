@@ -26,6 +26,28 @@ export const CarouselContainer = styled.div`
     }
   }
   .swiper-slide {
+    .ratio_img {
+      position: relative;
+      padding-top: 62.5%;
+      @media ${DEVICE.DESKTOP_XXL} {
+        padding-top: 32.5%;
+      }
+      @media ${DEVICE.DESKTOP_XL} {
+        padding-top: 42.5%;
+      }
+      @media ${DEVICE.TABLET} {
+        padding-top: 52.5%;
+      }
+      img {
+        max-width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
     .ratio_video {
       position: relative;
       @media ${DEVICE.DESKTOP_XXL} {

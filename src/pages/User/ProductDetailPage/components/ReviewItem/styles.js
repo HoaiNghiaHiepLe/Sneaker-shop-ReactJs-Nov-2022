@@ -9,18 +9,18 @@ export const ProductRating = styled.div`
   overflow: visible;
   &:hover {
     .product_rating {
-      box-shadow: 0 10px 10px 0 rgb(65, 105, 225, 40%);
+      box-shadow: 0 10px 10px 0 rgb(0, 0, 0, 20%);
     }
     .product_rating_avata {
       width: 6rem;
       transform: translateX(20px);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
     .product_rating_main {
       margin-left: 10px;
       padding-right: 34px;
       transform: translateX(15px);
-      transition: all 300ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
     }
   }
   .product_rating_list {

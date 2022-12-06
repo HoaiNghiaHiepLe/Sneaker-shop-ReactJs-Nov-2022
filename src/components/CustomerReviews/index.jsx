@@ -22,7 +22,7 @@ const CustomerReviews = ({ reviewList }) => {
               {item.user.fullName}
             </div>
             <Rate
-              className="product_user_rating royalblue_color"
+              className="product_user_rating"
               value={item.rate}
               disabled
               style={{ fontSize: 14 }}
@@ -30,7 +30,7 @@ const CustomerReviews = ({ reviewList }) => {
             <p className="product_rating_time">
               {moment(item.createdAt).fromNow()}
             </p>
-            <div className="product_rating_content">{item.comment}</div>
+            <div className="product_rating_comment">{item.comment}</div>
           </div>
         </SwiperSlide>
       );
@@ -46,7 +46,7 @@ const CustomerReviews = ({ reviewList }) => {
         modules={[Navigation, A11y, Autoplay, FreeMode]}
         spaceBetween={0}
         grabCursor={true}
-        autoplay={{ delay: 1500 }}
+        autoplay={{ delay: 3000 }}
         speed={800}
         loop={true}
         navigation

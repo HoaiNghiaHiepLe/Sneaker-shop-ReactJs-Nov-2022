@@ -313,11 +313,7 @@ const ProductDetailPage = () => {
             <S.ProductRatingContainer>
               <div className="rating_overview">
                 <div className="rating_overview_briefing">
-                  <Rate
-                    className="royalblue_color"
-                    value={handleRating()}
-                    disabled
-                  />
+                  <Rate value={handleRating()} disabled />
                 </div>
                 {handleRating() > 0 ? (
                   <div className="rating_overview_filter">

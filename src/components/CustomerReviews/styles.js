@@ -14,6 +14,7 @@ export const ProductRatingSwiper = styled(Swiper)`
   }
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   .product_rating_container {
+    position: relative;
     border-radius: 10px;
     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
     background-color: #fff;
@@ -31,17 +32,30 @@ export const ProductRatingSwiper = styled(Swiper)`
       margin: 0 2rem;
       padding: 1rem;
       transform: scale(1.3);
-      transition: all 800ms cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 1000ms cubic-bezier(0.34, 1.61, 0.7, 1);
       box-shadow: 0 5px 15px -8px rgb(0 0 0 / 24%),
         0 8px 10px -5px rgba(0 0 0 / 100%);
     }
     &:hover {
-      background-image: url(https://wallpapercave.com/wp/wp3340286.jpg);
-      background-position: center top;
-      background-attachment: cover;
-      background-size: fixed;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-image: url(https://t4.ftcdn.net/jpg/02/68/73/45/360_F_268734576_7id1aKnNkQwj6GDn7GZ7bA1jMFkmVTrT.jpg);
+        background-position: center center;
+        background-attachment: cover;
+        background-size: fixed;
+        filter: brightness(50%);
+      }
       .product_rating_time,
-      .product_rating_content {
+      .product_rating_comment {
+        filter: contrast(200%);
         color: #fff;
         transform: scale(1.2);
         transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
@@ -66,8 +80,7 @@ export const ProductRatingSwiper = styled(Swiper)`
         transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
         .anticon-star {
           cursor: grab;
-          box-shadow: 0 5px 15px -8px rgb(0 0 0 / 24%),
-            0 8px 10px -5px rgba(0 0 0 / 100%);
+          filter: contrast(200%);
         }
       }
       .product_rating_time {
@@ -77,7 +90,7 @@ export const ProductRatingSwiper = styled(Swiper)`
         text-shadow: 2px 2px 3px rgb(0 0 0 / 100%);
         color: rgba(255, 255, 255, 80%);
       }
-      .product_rating_content {
+      .product_rating_comment {
         margin: 5px 0 5px 0;
         transform: scale(1.1);
         transition: all 500ms cubic-bezier(0.34, 1.61, 0.7, 1);
@@ -115,7 +128,7 @@ export const ProductRatingSwiper = styled(Swiper)`
       font-size: 0.75rem;
       color: rgba(0, 0, 0, 0.54);
     }
-    .product_rating_content {
+    .product_rating_comment {
       display: -webkit-box;
       position: relative;
       -moz-box-sizing: border-box;

@@ -19,7 +19,6 @@ import * as S from "./styles";
 const BlogListPage = () => {
   const dispatch = useDispatch();
   const { blogList, blogListFeature } = useSelector((state) => state.blog);
-
   const [filterParams, setFilterParams] = useState({
     keyword: "",
     order: undefined,
@@ -47,22 +46,45 @@ const BlogListPage = () => {
     document.title = TITLES.USER.BLOG_LIST;
   }, []);
 
+  useEffect(() => {
+    const delayDebounce = setTimeout((key, value) => {
+      dispatch(
+        getBlogListAction({
+          params: {
+            ...filterParams,
+            [key]: value,
+            page: 1,
+            limit: BLOG_LIST_LIMIT,
+          },
+        })
+      );
+    }, 1000);
+    return () => clearTimeout(delayDebounce);
+  }, [filterParams]);
+
   const handleFilter = (key, value) => {
     setFilterParams({
       ...filterParams,
       [key]: value,
     });
-    dispatch(
-      getBlogListAction({
-        params: {
-          ...filterParams,
-          [key]: value,
-          page: 1,
-          limit: BLOG_LIST_LIMIT,
-        },
-      })
-    );
   };
+
+  // const handleFilter = (key, value) => {
+  //   setFilterParams({
+  //     ...filterParams,
+  //     [key]: value,
+  //   });
+  //   dispatch(
+  //     getBlogListAction({
+  //       params: {
+  //         ...filterParams,
+  //         [key]: value,
+  //         page: 1,
+  //         limit: BLOG_LIST_LIMIT,
+  //       },
+  //     })
+  //   );
+  // };
 
   const handleChangePage = (page) => {
     dispatch(
@@ -74,7 +96,7 @@ const BlogListPage = () => {
       })
     );
   };
-  
+
   const renderBlogList = () => {
     return blogList.data?.map((item) => {
       return (

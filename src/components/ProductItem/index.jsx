@@ -69,9 +69,9 @@ const ProductItem = ({ item }) => {
               Có {item.size?.length} size
             </Tag>
           </Tooltip>
-          <Tag className="product_amount" color="geekblue" key={item.amount}>
+          {/* <Tag className="product_amount" color="geekblue" key={item.amount}>
             Còn {item.amount} sản phẩm
-          </Tag>
+          </Tag> */}
         </div>
         <div className="product_price">
           <span>

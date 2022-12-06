@@ -9,6 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getProductListAction,
@@ -143,7 +144,9 @@ const UserHomePage = () => {
     return CAROUSEL_LINK?.map((item, i) => {
       return (
         <SwiperSlide key={i}>
-          <img src={item.path} alt="" />
+          <div className="ratio_img">
+            <img src={item.path} alt="" />
+          </div>
         </SwiperSlide>
       );
     });
@@ -157,31 +160,26 @@ const UserHomePage = () => {
         <S.Container>
           <S.CarouselContainer>
             <Swiper
-              modules={[]}
+              modules={[Pagination, Autoplay]}
               centeredSlides={true}
               slidesPerView={1}
-              allowSlideNext={false}
-              allowSlidePrev={false}
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-              }}
+              // allowSlideNext={false}
+              // allowSlidePrev={false}
+              grabCursor={true}
+              autoplay={{ delay: 1500 }}
               loop={true}
               className="mySwiper"
             >
-              <div className="swipper_wraper">
+              {/* <div className="swipper_wraper">
                 <SwiperSlide>
                   <div className="ratio_video">
                     <video src={video_carousel} autoPlay muted loop />
                   </div>
                 </SwiperSlide>
-              </div>
+              </div> */}
+              {renderCarousel()}
             </Swiper>
           </S.CarouselContainer>
-
           <S.ProductListContainer>
             <S.ContainerTiltle>
               <span className="title_underline">Sản phẩm mới</span>

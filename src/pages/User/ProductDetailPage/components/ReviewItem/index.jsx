@@ -25,12 +25,7 @@ const ReviewItem = ({ reviewList }) => {
                     {item.user.fullName}
                   </div>
                   <div className="product_user_rating">
-                    <Rate
-                      className="royalblue_color"
-                      value={item.rate}
-                      disabled
-                      style={{ fontSize: 14 }}
-                    />
+                    <Rate value={item.rate} disabled style={{ fontSize: 14 }} />
                   </div>
                   <div className="product_rating_time">
                     {moment(item.createdAt).fromNow()}
