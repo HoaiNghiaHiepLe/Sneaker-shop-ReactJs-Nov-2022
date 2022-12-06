@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Row,
   Col,
@@ -89,16 +89,17 @@ const UserProductListPage = () => {
         })
       );
       setFilterParams({ ...filterParams, gender: 2 });
-    } else {
-      dispatch(
-        getProductListAction({
-          params: {
-            page: 1,
-            limit: PRODUCT_LIST_LIMIT,
-          },
-        })
-      );
     }
+    // else {
+    //   dispatch(
+    //     getProductListAction({
+    //       params: {
+    //         page: 1,
+    //         limit: PRODUCT_LIST_LIMIT,
+    //       },
+    //     })
+    //   );
+    // }
     dispatch(
       getCategoryListAction({
         params: {
@@ -312,7 +313,7 @@ const UserProductListPage = () => {
     );
   };
 
-  const renderProductList = () => {
+  const renderProductList = useMemo(() => {
     return productList.data.map((item) => {
       return (
         <Col xs={24} sm={12} lg={12} xl={8} xxl={6} key={item.id}>
@@ -338,7 +339,7 @@ const UserProductListPage = () => {
         </Col>
       );
     });
-  };
+  }, [productList]);
 
   const renderCategoryOptions = () => {
     return categoryList.data.map((item) => {
@@ -368,7 +369,7 @@ const UserProductListPage = () => {
           <Col span={2} />
           <Col span={20}>
             <Row gutter={[16, 16]}>
-              <Col xs={0} lg={8} xl={6} xxl={6}>
+              <Col xs={24} lg={8} xl={6} xxl={6}>
                 <S.CustomCard
                   size="small"
                   style={{
@@ -496,21 +497,31 @@ const UserProductListPage = () => {
                   <LoadingWrapper />
                 ) : (
                   <>
-                    <h3 style={{ color: "royalblue" }}>
-                      Có {productList.meta.total} sản phẩm
-                    </h3>
+                    {productList.meta.total == null ? (
+                      <></>
+                    ) : (
+                      <h3 style={{ color: "royalblue" }}>
+                        Có {productList.meta.total} sản phẩm
+                      </h3>
+                    )}
                     <Row style={{ marginTop: "20px" }} gutter={[16, 16]}>
-                      {renderProductList()}
+                      {renderProductList}
                     </Row>
-                    {productList.data.length !== productList.meta.total && (
-                      <Row justify="center">
-                        <Button
-                          style={{ marginTop: 16 }}
-                          onClick={() => handleShowMore()}
-                        >
-                          Xem thêm
-                        </Button>
-                      </Row>
+                    {productList.meta.total == null ? (
+                      <></>
+                    ) : (
+                      <>
+                        {productList.data.length !== productList.meta.total && (
+                          <Row justify="center">
+                            <Button
+                              style={{ marginTop: 16 }}
+                              onClick={() => handleShowMore()}
+                            >
+                              Xem thêm
+                            </Button>
+                          </Row>
+                        )}
+                      </>
                     )}
                   </>
                 )}

@@ -25,15 +25,15 @@ const BlogListPage = () => {
   });
 
   useEffect(() => {
-    dispatch(
-      getBlogListAction({
-        params: {
-          page: 1,
-          limit: BLOG_LIST_LIMIT,
-          order: "id.desc",
-        },
-      })
-    );
+    // dispatch(
+    //   getBlogListAction({
+    //     params: {
+    //       page: 1,
+    //       limit: BLOG_LIST_LIMIT,
+    //       order: "id.desc",
+    //     },
+    //   })
+    // );
     dispatch(
       getBlogListFeatureAction({
         params: {
@@ -223,13 +223,17 @@ const BlogListPage = () => {
               <>
                 <S.BlogListContent>
                   {renderBlogList()}
-                  <Pagination
-                    current={blogList.meta.page}
-                    pageSize={BLOG_LIST_LIMIT}
-                    total={blogList.meta.total}
-                    onChange={(page) => handleChangePage(page)}
-                    style={{ margin: "16px auto 0" }}
-                  />
+                  {blogList.meta.total == null ? (
+                    <></>
+                  ) : (
+                    <Pagination
+                      current={blogList.meta.page}
+                      pageSize={BLOG_LIST_LIMIT}
+                      total={blogList.meta.total}
+                      onChange={(page) => handleChangePage(page)}
+                      style={{ margin: "16px auto 0" }}
+                    />
+                  )}
                 </S.BlogListContent>
               </>
             )}

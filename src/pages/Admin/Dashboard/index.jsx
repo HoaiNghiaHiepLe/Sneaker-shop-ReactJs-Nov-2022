@@ -35,11 +35,6 @@ const AdminDashboard = () => {
   const { productDetail, productList } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 32 ~ AdminDashboard ~ reviewList",
-    reviewList
-  );
-
   useEffect(() => {
     dispatch(getProductDetailAction({ id: id }));
     dispatch(getReviewListAction({ productId: id }));
@@ -163,69 +158,54 @@ const AdminDashboard = () => {
           </Col>
         </Row>
         <Row>
-          <Col span={24}>
-            <S.TrackBoardSection>
-              <div className="trackBoard_container">
-                <div className="trackBoard_content">
-                  <div className="trackBoard_top">
-                    <div className="trackBoard_symbol golden_background">
-                      <MdOutlineAttachMoney className="trackBoard_svg" />
+          <Col span={16}>
+            <Col span={24}>
+              <S.TrackBoardSection>
+                <div className="trackBoard_container">
+                  <div className="trackBoard_content">
+                    <div className="trackBoard_top">
+                      <div className="trackBoard_symbol golden_background">
+                        <MdOutlineAttachMoney className="trackBoard_svg" />
+                      </div>
+                      <h4 className="trackBoard_title">Thống kê doanh thu</h4>
                     </div>
-                    <h4 className="trackBoard_title">Thống kê doanh thu</h4>
-                    <div className="img_ratio">
-                      <img
-                        src="https://www.ag-grid.com/static/a0c43454626bfb87835c5f3dce892713/chart-settings-still.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="trackBoard_bottom"></div>
-                </div>
-              </div>
-            </S.TrackBoardSection>
-          </Col>
-          <Col span={24}>
-            <S.TrackBoardSection>
-              <div className="trackBoard_container">
-                <div className="trackBoard_content">
-                  <div className="trackBoard_top">
-                    <div className="trackBoard_symbol green_background">
-                      <GoTasklist className="trackBoard_svg" />
-                    </div>
-                    <h4 className="trackBoard_title">Thống kê đơn hàng</h4>
-                  </div>
-                  <div className="trackBoard_bottom">
-                    <div className="img_ratio">
-                      <img src="https://i.stack.imgur.com/PmZSc.png" alt="" />
-                    </div>
+                    <div className="trackBoard_bottom"></div>
                   </div>
                 </div>
-              </div>
-            </S.TrackBoardSection>
-          </Col>
-          <Col span={24}>
-            <S.TrackBoardSection>
-              <div className="trackBoard_container">
-                <div className="trackBoard_content">
-                  <div className="trackBoard_top">
-                    <div className="trackBoard_symbol orange_background">
-                      <BsFillCartCheckFill className="trackBoard_svg" />
+              </S.TrackBoardSection>
+            </Col>
+            <Col span={24}>
+              <S.TrackBoardSection>
+                <div className="trackBoard_container">
+                  <div className="trackBoard_content">
+                    <div className="trackBoard_top">
+                      <div className="trackBoard_symbol green_background">
+                        <GoTasklist className="trackBoard_svg" />
+                      </div>
+                      <h4 className="trackBoard_title">Thống kê đơn hàng</h4>
                     </div>
-                    <h4 className="trackBoard_title">Thống kê sản phẩm</h4>
-                  </div>
-                  <div className="trackBoard_bottom">
-                    <div className="img_ratio">
-                      <img
-                        src="https://screenshots.codesandbox.io/93m1lpjrvr.png"
-                        alt=""
-                      />
-                    </div>
+                    <div className="trackBoard_bottom"></div>
                   </div>
                 </div>
-              </div>
-            </S.TrackBoardSection>
+              </S.TrackBoardSection>
+            </Col>
+            <Col span={24}>
+              <S.TrackBoardSection>
+                <div className="trackBoard_container">
+                  <div className="trackBoard_content">
+                    <div className="trackBoard_top">
+                      <div className="trackBoard_symbol orange_background">
+                        <BsFillCartCheckFill className="trackBoard_svg" />
+                      </div>
+                      <h4 className="trackBoard_title">Thống kê sản phẩm</h4>
+                    </div>
+                    <div className="trackBoard_bottom"></div>
+                  </div>
+                </div>
+              </S.TrackBoardSection>
+            </Col>
           </Col>
-          <Col span={24}>
+          <Col span={8}>
             <S.TrackBoardSection>
               <div className="trackBoard_container">
                 <div className="trackBoard_content">
