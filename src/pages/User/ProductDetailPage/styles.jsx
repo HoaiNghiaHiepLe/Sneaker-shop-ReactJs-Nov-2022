@@ -11,10 +11,8 @@ export const ProductInfo = styled.div`
   }
   .product_discription {
     & {
-      @media ${DEVICE.DESKTOP_XXL} {
-        padding-left: 10px;
-        padding-right: 10px;
-      }
+      padding-left: 10px;
+      padding-right: 10px;
       @media ${DEVICE.DESKTOP_XL} {
         padding: 0px 20px !important;
         .product_name {

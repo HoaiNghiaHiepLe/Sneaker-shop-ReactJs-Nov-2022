@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Row,
   Col,
-  Card,
   Badge,
   Input,
   Space,
@@ -10,7 +9,6 @@ import {
   Button,
   Collapse,
   Checkbox,
-  Tag,
   Radio,
   Slider,
 } from "antd";
@@ -110,6 +108,29 @@ const UserProductListPage = () => {
     );
   }, [state]);
 
+  useEffect(() => {
+    const delayDebounce = setTimeout((key, value) => {
+      dispatch(
+        getProductListAction({
+          params: {
+            ...filterParams,
+            [key]: value,
+            page: 1,
+            limit: PRODUCT_LIST_LIMIT,
+          },
+        })
+      );
+    }, 1000);
+    return () => clearTimeout(delayDebounce);
+  }, [filterParams]);
+
+  const handleFilter = (key, value) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: value,
+    });
+  };
+
   const handleShowMore = () => {
     dispatch(
       getProductListAction({
@@ -122,39 +143,22 @@ const UserProductListPage = () => {
     );
   };
 
-  const handleFilter = (key, value) => {
-    setFilterParams({
-      ...filterParams,
-      [key]: value,
-    });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          [key]: value,
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
-  };
-
   const handleClearCategoryFilter = (id) => {
     const newCategoryId = filterParams.categoryId.filter((item) => item !== id);
     setFilterParams({
       ...filterParams,
       categoryId: newCategoryId,
     });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          categoryId: newCategoryId,
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
+    // dispatch(
+    //   getProductListAction({
+    //     params: {
+    //       ...filterParams,
+    //       categoryId: newCategoryId,
+    //       page: 1,
+    //       limit: PRODUCT_LIST_LIMIT,
+    //     },
+    //   })
+    // );
   };
 
   const handleClearKeywordFilter = () => {
@@ -162,16 +166,16 @@ const UserProductListPage = () => {
       ...filterParams,
       keyword: "",
     });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          keyword: "",
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
+    // dispatch(
+    //   getProductListAction({
+    //     params: {
+    //       ...filterParams,
+    //       keyword: "",
+    //       page: 1,
+    //       limit: PRODUCT_LIST_LIMIT,
+    //     },
+    //   })
+    // );
   };
 
   const handleClearGenderFilter = () => {
@@ -179,16 +183,16 @@ const UserProductListPage = () => {
       ...filterParams,
       gender: undefined,
     });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          gender: undefined,
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
+    // dispatch(
+    //   getProductListAction({
+    //     params: {
+    //       ...filterParams,
+    //       gender: undefined,
+    //       page: 1,
+    //       limit: PRODUCT_LIST_LIMIT,
+    //     },
+    //   })
+    // );
   };
 
   const handleClearPriceFilter = () => {
@@ -196,16 +200,16 @@ const UserProductListPage = () => {
       ...filterParams,
       price: [MIN_PRICE, MAX_PRICE],
     });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          price: [MIN_PRICE, MAX_PRICE],
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
+    // dispatch(
+    //   getProductListAction({
+    //     params: {
+    //       ...filterParams,
+    //       price: [MIN_PRICE, MAX_PRICE],
+    //       page: 1,
+    //       limit: PRODUCT_LIST_LIMIT,
+    //     },
+    //   })
+    // );
   };
 
   const handleClearSizeFilter = () => {
@@ -213,16 +217,16 @@ const UserProductListPage = () => {
       ...filterParams,
       size: [],
     });
-    dispatch(
-      getProductListAction({
-        params: {
-          ...filterParams,
-          size: [],
-          page: 1,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
+    // dispatch(
+    //   getProductListAction({
+    //     params: {
+    //       ...filterParams,
+    //       size: [],
+    //       page: 1,
+    //       limit: PRODUCT_LIST_LIMIT,
+    //     },
+    //   })
+    // );
   };
 
   const renderFilterCategory = () => {
