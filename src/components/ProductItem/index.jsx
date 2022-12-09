@@ -17,7 +17,7 @@ const ProductItem = ({ item }) => {
           return (
             <img
               key={item.id}
-              className="product_list_img visible_img"
+              className="product_list_img"
               src={item.url}
               alt={item.name}
             />
@@ -28,7 +28,7 @@ const ProductItem = ({ item }) => {
               return (
                 <img
                   key={item.id}
-                  className="product_list_img hidden_img"
+                  className="product_list_img toggle_img"
                   src={item.url}
                   alt={item.name}
                 />
@@ -38,7 +38,7 @@ const ProductItem = ({ item }) => {
               return (
                 <img
                   key={item.id}
-                  className="product_list_img hidden_img"
+                  className="product_list_img toggle_img"
                   src={item.url}
                   alt={item.name}
                 />

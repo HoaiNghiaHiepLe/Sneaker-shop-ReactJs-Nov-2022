@@ -42,7 +42,7 @@ import LoadingWrapper from "../../../components/LoadingWrapper";
 import ProductItem from "../../../components/ProductItem";
 import { ROUTES, TITLES } from "../../../constants";
 import { BREADCRUMB } from "./constants";
-import { calcDiscount } from "../../../utils/product";
+import { calcDiscount } from "../../../utils/function/product";
 import { PRODUCT_RELATED_LIMIT } from "../../../constants/pagination";
 
 import * as S from "./styles";
@@ -111,6 +111,7 @@ const ProductDetailPage = () => {
     notification.open({
       message: "Thông báo",
       description: "Đã thêm sản phẩm vào giỏ hàng",
+      duration: 1,
       icon: (
         <CheckCircleTwoTone
           style={{
@@ -247,7 +248,7 @@ const ProductDetailPage = () => {
       label: <h2 style={{ color: "#333" }}>Cách chọn size giày</h2>,
       key: "3",
       children: (
-        <>
+        <S.GuidelineContainer>
           <p style={{ color: "#333" }}>
             Để chọn size giày phù hợp với chân của mình, bạn có thể làm theo
             cách sau:
@@ -275,80 +276,84 @@ const ProductDetailPage = () => {
             />
           </Row>
           <p>Chúc các bạn lựa chọn được đôi giày ưng ý</p>
-        </>
+        </S.GuidelineContainer>
       ),
     },
     {
       label: <h2 style={{ color: "#333" }}>Đánh giá</h2>,
       key: "2",
       children: (
-        <Row>
-          <Col span={24}>
-            {userInfo.data.id ? (
-              <S.ProductRatingForm>
-                <h2 className="rating_header">ĐÁNH GIÁ SẢN PHẨM</h2>
-                <Form
-                  form={reviewForm}
-                  layout="vertical"
-                  className="rating_form"
-                  onFinish={(values) => {
-                    handlePostReview(values);
-                    reviewForm.resetFields();
-                  }}
-                >
-                  <Form.Item label="Rate" name="rate">
-                    <Rate />
-                  </Form.Item>
-                  <Form.Item label="Comment" name="comment">
-                    <Input.TextArea autoSize={{ maxRows: 6, minRows: 2 }} />
-                  </Form.Item>
-                  <S.CustomBtn htmlType="submit" block>
-                    Đánh giá
-                  </S.CustomBtn>
-                </Form>
-              </S.ProductRatingForm>
-            ) : (
-              <h2 className="rating_header">Đăng nhập để đánh giá sản phẩm</h2>
-            )}
-            <S.ProductRatingContainer>
-              <div className="rating_overview">
-                <div className="rating_overview_briefing">
-                  <Rate value={handleRating()} disabled />
+        <S.ReviewItemContainer>
+          <Row>
+            <Col span={24}>
+              {userInfo.data.id ? (
+                <S.ProductRatingForm>
+                  <h2 className="rating_header">ĐÁNH GIÁ SẢN PHẨM</h2>
+                  <Form
+                    form={reviewForm}
+                    layout="vertical"
+                    className="rating_form"
+                    onFinish={(values) => {
+                      handlePostReview(values);
+                      reviewForm.resetFields();
+                    }}
+                  >
+                    <Form.Item label="Rate" name="rate">
+                      <Rate />
+                    </Form.Item>
+                    <Form.Item label="Comment" name="comment">
+                      <Input.TextArea autoSize={{ maxRows: 6, minRows: 2 }} />
+                    </Form.Item>
+                    <S.CustomBtn htmlType="submit" block>
+                      Đánh giá
+                    </S.CustomBtn>
+                  </Form>
+                </S.ProductRatingForm>
+              ) : (
+                <h2 className="rating_header">
+                  Đăng nhập để đánh giá sản phẩm
+                </h2>
+              )}
+              <S.ProductRatingContainer>
+                <div className="rating_overview">
+                  <div className="rating_overview_briefing">
+                    <Rate value={handleRating()} disabled />
+                  </div>
+                  {handleRating() > 0 ? (
+                    <div className="rating_overview_filter">
+                      <span
+                        className="royalblue_color"
+                        style={{ fontSize: "1.875rem" }}
+                      >
+                        {handleRating()}
+                      </span>{" "}
+                      <span
+                        className="royalblue_color"
+                        style={{ fontSize: "1.125rem" }}
+                      >
+                        trên 5 sao
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="rating_overview_filter">
+                      <span
+                        className="royalblue_color"
+                        style={{ fontSize: "1.875rem" }}
+                      ></span>{" "}
+                      <span
+                        className="royalblue_color"
+                        style={{ fontSize: "1.125rem" }}
+                      >
+                        Chưa có đánh giá
+                      </span>
+                    </div>
+                  )}
                 </div>
-                {handleRating() > 0 ? (
-                  <div className="rating_overview_filter">
-                    <span
-                      className="royalblue_color"
-                      style={{ fontSize: "1.875rem" }}
-                    >
-                      {handleRating()}
-                    </span>{" "}
-                    <span
-                      className="royalblue_color"
-                      style={{ fontSize: "1.125rem" }}
-                    >
-                      trên 5 sao
-                    </span>
-                  </div>
-                ) : (
-                  <div className="rating_overview_filter">
-                    <span
-                      className="royalblue_color"
-                      style={{ fontSize: "1.875rem" }}
-                    ></span>{" "}
-                    <span
-                      className="royalblue_color"
-                      style={{ fontSize: "1.125rem" }}
-                    >
-                      Chưa có đánh giá
-                    </span>
-                  </div>
-                )}
-              </div>
-              <ReviewItem reviewList={reviewList} />
-            </S.ProductRatingContainer>
-          </Col>
-        </Row>
+                <ReviewItem reviewList={reviewList} />
+              </S.ProductRatingContainer>
+            </Col>
+          </Row>
+        </S.ReviewItemContainer>
       ),
     },
   ];
@@ -367,7 +372,7 @@ const ProductDetailPage = () => {
             title: productDetail.data.name,
           },
         ]}
-        height={200}
+        height={300}
       />
       {productDetail.data.loading ? (
         <LoadingWrapper />
@@ -442,10 +447,11 @@ const ProductDetailPage = () => {
                     <div className="product_detail">{`Số lượng còn lại: ${productDetail.data.amount}`}</div>
                     <div className="product_size">
                       <b>Size: </b>
-                      <div className="size_select">
+                      <div className="size_group">
                         {productDetail.data.size?.map((item) => {
                           return (
                             <Radio.Group
+                              className="size_select"
                               style={{ paddingRight: "10px" }}
                               key={item}
                               size="large"

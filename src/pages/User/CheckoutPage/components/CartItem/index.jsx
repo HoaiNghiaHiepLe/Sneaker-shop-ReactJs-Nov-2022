@@ -1,14 +1,16 @@
 import { Row, Col, Image, Modal, Button, InputNumber, Space } from "antd";
 import { useDispatch } from "react-redux";
+import { Link, generatePath } from "react-router-dom";
 import { useState } from "react";
 
 import {
   deleteCartItemAction,
   updateCartItemAction,
 } from "../../../../../redux/actions";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { calcPrice, calcDiscount } from "../../../../../utils/function/product";
+import { ROUTES, TITLES } from "../../../../../constants/";
+import { FaTrash } from "react-icons/fa";
+import { TiMinus, TiPlus } from "react-icons/ti";
 
 import * as S from "./styles";
 
@@ -28,87 +30,122 @@ const CartItem = ({ cartInfo }) => {
     }
   };
 
-  const handleChangeQuantity = (productId, value) => {
+  const handleChangeQuantityBtn = (productId, quantity, type) => {
     dispatch(
       updateCartItemAction({
         productId: productId,
-        quantity: value,
+        quantity: type === "plus" ? quantity + 1 : quantity - 1,
       })
     );
   };
-  const calcDiscount = (currentPrice, discount) => {
-    return currentPrice - (currentPrice * discount) / 100;
+  const handleChangeQuantityInput = (productId, quantity) => {
+    dispatch(
+      updateCartItemAction({
+        productId: productId,
+        quantity: quantity,
+      })
+    );
   };
 
-  const calcPrice = (price, quantity) => price * quantity;
-
   return (
-    <S.CartItemWrapper>
-      <Row>
-        <Col span={6}>
-          <Image
-            src={cartInfo.image}
-            width={"100%"}
-            height={"160px"}
-            preview={false}
-            style={{
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-        </Col>
-        <Col span={18}>
-          <S.CartItemContent>
-            <S.CartItemContentTop>
-              <S.CartItemTittle>{cartInfo.productName}</S.CartItemTittle>
-              <span
-                style={{ fontSize: "20px", color: "#f44336" }}
-              >{`${calcPrice(
+    <>
+      <S.CartItemWrapper>
+        <Row>
+          <Col span={7}>
+            <Link
+              to={generatePath(ROUTES.USER.PRODUCT_DETAILS, {
+                id: `${cartInfo.slug}.${cartInfo.productId}`,
+              })}
+            >
+              <Row>
+                <Col span={8}>
+                  <div className="item_img">
+                    <img alt="" src={cartInfo.image} />
+                  </div>
+                </Col>
+                <Col span={16}>
+                  <div className="item_name">
+                    <h3>{cartInfo.productName}</h3>
+                  </div>
+                </Col>
+              </Row>
+            </Link>
+          </Col>
+          <Col span={3}>
+            <div className="item_brand">{cartInfo.productBrand}</div>
+          </Col>
+          <Col span={3}>
+            <div className="item_size">{cartInfo.size}</div>
+          </Col>
+          <Col span={3}>
+            <div className="item_price">
+              <s className="prime_price">{cartInfo.price.toLocaleString()} đ</s>
+              <span className="item_discount">
+                Tiết kiệm <b> {cartInfo.discount}%</b>
+              </span>
+              <span className="final_price_each">
+                {calcDiscount(
+                  cartInfo.price,
+                  cartInfo.discount
+                ).toLocaleString()}
+                đ
+              </span>
+            </div>
+          </Col>
+          <Col span={3}>
+            <div className="item_quantity">
+              <S.ChangeQuantityBtn
+                icon={<TiMinus />}
+                onClick={() => {
+                  if (cartInfo.quantity === 1) return null;
+                  handleChangeQuantityBtn(
+                    cartInfo.productId,
+                    cartInfo.quantity,
+                    "minus"
+                  );
+                }}
+              ></S.ChangeQuantityBtn>
+              <S.ChangeQuantityInput
+                min={1}
+                max={cartInfo.amount}
+                defaultValue={cartInfo.quantity}
+                value={cartInfo.quantity}
+                onChange={(quantity) => {
+                  if (quantity > cartInfo.amount) return null;
+                  handleChangeQuantityInput(cartInfo.productId, quantity);
+                }}
+              />
+              <S.ChangeQuantityBtn
+                icon={<TiPlus />}
+                onClick={() => {
+                  if (cartInfo.quantity > cartInfo.amount - 1) return null;
+                  handleChangeQuantityBtn(
+                    cartInfo.productId,
+                    cartInfo.quantity,
+                    "plus"
+                  );
+                }}
+              ></S.ChangeQuantityBtn>
+            </div>
+          </Col>
+          <Col span={3}>
+            <div className="item_price">
+              <span className="final_price">{`${calcPrice(
                 calcDiscount(cartInfo.price, cartInfo.discount),
                 cartInfo.quantity
               ).toLocaleString()}đ`}</span>
-            </S.CartItemContentTop>
-            <S.CartItemContentMid>
-              <span>
-                Thương hiệu:{" "}
-                <span style={{ fontWeight: "bold" }}>
-                  {cartInfo.productBrand}
-                </span>
-              </span>
-              <br />
-              <span>
-                Size:{" "}
-                <span style={{ fontWeight: "bold" }}>{cartInfo.size}</span>
-              </span>
-            </S.CartItemContentMid>
-            <S.CartItemContentBot>
-              <div
-                style={{
-                  width: "100px",
-                }}
-              >
-                <InputNumber
-                  min={1}
-                  max={cartInfo.amount}
-                  defaultValue={cartInfo.quantity}
-                  onChange={(value) =>
-                    handleChangeQuantity(cartInfo.productId, value)
-                  }
-                />
-              </div>
-              <Button
-                danger
-                ghost
-                onClick={() => handleDeleteCartItem(cartInfo.productId)}
-              >
-                <RiDeleteBinLine />
+            </div>
+          </Col>
+          <Col span={2}>
+            <div className="item_action">
+              <Button onClick={() => handleDeleteCartItem(cartInfo.productId)}>
+                <FaTrash className="delete_icon" />
               </Button>
-            </S.CartItemContentBot>
-          </S.CartItemContent>
-        </Col>
-      </Row>
-    </S.CartItemWrapper>
+            </div>
+          </Col>
+        </Row>
+      </S.CartItemWrapper>
+    </>
   );
 };
 

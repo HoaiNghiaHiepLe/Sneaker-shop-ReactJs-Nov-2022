@@ -12,7 +12,9 @@ export const ProductRatingSwiper = styled(Swiper)`
       margin-bottom: 50px;
     }
   }
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  .swiper-wrapper {
+    transition-timing-function: linear;
+  }
   .product_rating_container {
     position: relative;
     border-radius: 10px;

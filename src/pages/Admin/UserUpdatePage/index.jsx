@@ -19,7 +19,7 @@ import slug from "slug";
 
 import * as S from "./styles";
 
-import { onPreview, convertImageToBase64 } from "../../../utils/file";
+import { onPreview, convertImageToBase64 } from "../../../utils/function/file";
 import { ROUTES, TITLES } from "../../../constants";
 import {
   updateUserAction,

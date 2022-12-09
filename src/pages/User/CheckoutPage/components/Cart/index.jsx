@@ -19,6 +19,10 @@ import {
   deleteCartItemAction,
 } from "../../../../../redux/actions";
 import CartItem from "../CartItem";
+import {
+  calcTotalPrice,
+  calcDiscount,
+} from "../../../../../utils/function/product";
 
 import * as S from "./styles";
 
@@ -27,31 +31,55 @@ const Cart = ({ setStep }) => {
   const dispatch = useDispatch();
 
   const { cartList } = useSelector((state) => state.cart);
-  const calcDiscount = (currentPrice, discount) => {
-    return currentPrice - (currentPrice * discount) / 100;
-  };
-
-  const calcTotalPrice = () => {
-    if (cartList.length > 0) {
-      return cartList
-        .map((item) => calcDiscount(item.price, item.discount) * item.quantity)
-        .reduce((total, price) => total + price);
-    } else {
-      return 0;
-    }
-  };
 
   return (
     <>
       <Row style={{ marginTop: "24px" }}>
-        <Col span={2}></Col>
-        <Col span={20} >
-          <Row  gutter={[16, 16]}>
-            <Col  span={17}>
+        <Col span={0}></Col>
+        <Col span={24}>
+          <Row gutter={[16, 16]}>
+            <Col span={17}>
               {cartList.length > 0 ? (
-                cartList.map((item) => {
-                  return <CartItem style={{ backgroundColor: "#fff" }} key={item.productId} cartInfo={item} />;
-                })
+                <>
+                  <Row>
+                    <Col span={24}>
+                      <S.CartItemContentTop>
+                        <Col span={7}>
+                          <div className="item_name">Sản phẩm</div>
+                        </Col>
+                        <Col span={3}>
+                          <div className="item_brand">hãng</div>
+                        </Col>
+                        <Col span={3}>
+                          <div className="item_size">Size</div>
+                        </Col>
+                        <Col span={3}>
+                          <div className="item_price_each">Đơn giá</div>
+                        </Col>
+                        <Col span={3}>
+                          <div className="item_quantity">Số lượng</div>
+                        </Col>
+                        <Col span={3}>
+                          <div className="item_price_total">Số tiền</div>
+                        </Col>
+                        <Col span={2}>
+                          <div className="item_action">Thao tác</div>
+                        </Col>
+                      </S.CartItemContentTop>
+                    </Col>
+                  </Row>
+                  <S.CartItemContainer>
+                    {cartList.map((item) => {
+                      return (
+                        <CartItem
+                          style={{ backgroundColor: "#fff" }}
+                          key={item.productId}
+                          cartInfo={item}
+                        />
+                      );
+                    })}
+                  </S.CartItemContainer>
+                </>
               ) : (
                 <Empty
                   image={
@@ -97,8 +125,10 @@ const Cart = ({ setStep }) => {
                     <span>{`${cartList.length} sản phẩm`}</span>
                   </S.ListItem>
                   <S.ListItem>
-                    <span>Đơn giá:</span>
-                    <span>{`${calcTotalPrice().toLocaleString()}đ`}</span>
+                    <span>Tạm tính:</span>
+                    <span>{`${calcTotalPrice({
+                      cartList,
+                    }).toLocaleString()}đ`}</span>
                   </S.ListItem>
                   <List.Item>
                     <Input addonBefore={"Mã giảm giá"} />
@@ -111,7 +141,7 @@ const Cart = ({ setStep }) => {
                         fontWeight: 600,
                       }}
                     >
-                      Tổng tiền tạm tính:
+                      Tổng tiền:
                     </span>
                     <span
                       style={{
@@ -119,21 +149,23 @@ const Cart = ({ setStep }) => {
                         fontWeight: 600,
                         color: "#f44336",
                       }}
-                    >{`${calcTotalPrice().toLocaleString()}đ`}</span>
+                    >{`${calcTotalPrice({
+                      cartList,
+                    }).toLocaleString()}đ`}</span>
                   </S.ListItem>
                 </List>
                 {cartList.length === 0 ? (
                   <S.PayMentBtn disabled>Thanh toán</S.PayMentBtn>
                 ) : (
                   <S.PayMentBtn onClick={() => setStep(1)}>
-                    Mua hàng
+                    <span>Mua hàng</span>
                   </S.PayMentBtn>
                 )}
               </S.CartInfo>
             </Col>
           </Row>
         </Col>
-        <Col span={2}></Col>
+        <Col span={0}></Col>
       </Row>
     </>
   );

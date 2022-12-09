@@ -100,7 +100,7 @@ const BlogDetailPage = () => {
                 icon: <BiCommentDetail style={{ fontSize: 20 }} />,
               },
             ]}
-            height={200}
+            height={300}
           />
           <S.BlogListContainer>
             <Row

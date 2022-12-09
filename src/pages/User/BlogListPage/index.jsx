@@ -153,7 +153,7 @@ const BlogListPage = () => {
 
   return (
     <>
-      <TopWrapper breadcrumb={[...BREADCRUMB]} height={200} />
+      <TopWrapper breadcrumb={[...BREADCRUMB]} height={300} />
       <S.BlogListContainer>
         {blogList.loading ? (
           <></>
