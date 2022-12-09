@@ -119,9 +119,17 @@ export const ProductInfo = styled.div`
       color: #333;
       font-size: 20px;
     }
-    .size_select {
+    .size_group {
       margin-left: -5px;
       margin: 10px 0;
+      .size_select {
+        &:hover {
+          color: #fff;
+          transform: scale(1.3);
+          margin: 5px 10px;
+          transition: all 1500ms cubic-bezier(0.34, 1.61, 0.7, 1);
+        }
+      }
     }
   }
   .action_container {
@@ -199,6 +207,8 @@ export const ProductDetail = styled.div`
 `;
 
 export const ProductContent = styled.div`
+  max-height: 600px;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   -webkit-box-align: center;
@@ -224,6 +234,22 @@ export const ProductContent = styled.div`
     max-width: 100%;
     height: auto;
   }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(65, 105, 225, 20%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: royalblue;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #92c8af;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: rgb(146, 200, 175, 20%);
+  }
 `;
 
 export const ProductRatingForm = styled.div`
@@ -234,6 +260,46 @@ export const ProductRatingForm = styled.div`
     text-transform: capitalize;
     font-size: 1.125rem;
     color: #333;
+  }
+`;
+export const GuidelineContainer = styled.div`
+  max-height: 450px;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(65, 105, 225, 20%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: royalblue;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #92c8af;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: rgb(146, 200, 175, 20%);
+  }
+`;
+export const ReviewItemContainer = styled.div`
+  max-height: 600px;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(65, 105, 225, 20%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: royalblue;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #92c8af;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: rgb(146, 200, 175, 20%);
   }
 `;
 export const ProductRatingContainer = styled.div`
@@ -277,6 +343,10 @@ export const CustomBtn = styled(Button)`
   &:hover {
     background-color: #6486ed;
     color: #fff;
+    transform: scale(1.2);
+    margin: 20px;
+    transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    transition-duration: 1200ms;
   }
 `;
 export const FavoritetBtn = styled(Button)`
@@ -289,6 +359,10 @@ export const FavoritetBtn = styled(Button)`
   &:hover {
     background-color: #6486ed;
     color: #fff;
+    transform: scale(1.2);
+    margin: 20px;
+    transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
+    transition-duration: 1200ms;
   }
   .favourite_icon {
     margin-right: 8px;

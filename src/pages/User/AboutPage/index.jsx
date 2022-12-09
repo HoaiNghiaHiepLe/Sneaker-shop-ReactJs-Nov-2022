@@ -46,7 +46,7 @@ export default function AboutPage() {
   };
   return (
     <>
-      <TopWrapper breadcrumb={[...BREADCRUMB]} height={200} />
+      <TopWrapper breadcrumb={[...BREADCRUMB]} height={300} />
       {reviewList.loading ? (
         <LoadingWrapper />
       ) : (

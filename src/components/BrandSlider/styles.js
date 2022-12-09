@@ -1,6 +1,4 @@
 import styled, { css } from "styled-components";
-import Slider from "react-slick";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 export const BrandSlider = styled.div`
   user-select: none;
@@ -13,19 +11,8 @@ export const BrandSlider = styled.div`
     padding: 0;
     z-index: 1;
     width: 100%;
-    .swiper_wrapper {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      display: flex;
-      transition-property: -webkit-transform;
-      transition-property: transform;
-      transition-property: transform, -webkit-transform;
-      box-sizing: content-box;
-    }
-    .swiper-pagination-bullet-active {
-      background-color: royalblue;
+    .swiper-wrapper {
+      transition-timing-function: linear;
     }
   }
 

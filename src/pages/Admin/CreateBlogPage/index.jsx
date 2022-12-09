@@ -6,7 +6,7 @@ import { Button, Card, Form, Input, Select, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import slug from "slug";
 
-import { onPreview, convertImageToBase64 } from "../../../utils/file";
+import { onPreview, convertImageToBase64 } from "../../../utils/function/file";
 import { createBlogAction } from "../../../redux/actions";
 import { ROUTES, TITLES } from "../../../constants/";
 import * as S from "./styles";

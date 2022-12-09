@@ -46,8 +46,12 @@ const CustomerReviews = ({ reviewList }) => {
         modules={[Navigation, A11y, Autoplay, FreeMode]}
         spaceBetween={0}
         grabCursor={true}
-        autoplay={{ delay: 3000 }}
-        speed={800}
+        speed={3000}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         loop={true}
         navigation
         freeMode={true}

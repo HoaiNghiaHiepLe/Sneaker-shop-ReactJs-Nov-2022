@@ -15,6 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import TopWrapper from "../../../components/TopWrapper";
 import { BREADCRUMB } from "./constants";
 import { ROUTES, TITLES } from "../../../constants/";
+import { FaShoppingCart, FaCheckCircle } from "react-icons/fa";
+import { BsBagCheckFill } from "react-icons/bs";
+import { HiInformationCircle } from "react-icons/hi";
 
 import {
   updateCartItemAction,
@@ -54,16 +57,35 @@ const CheckoutPage = () => {
 
   return (
     <>
-      <TopWrapper breadcrumb={[...BREADCRUMB]} height={200} />
+      <TopWrapper breadcrumb={[...BREADCRUMB]} height={300} />
       <S.Wrapper>
-        <Steps current={step}>
-          <Steps.Step title="Giỏ hàng" />
-          <Steps.Step title="Thông tin khách hàng" />
-          <Steps.Step title="Thanh Toán" />
-          <Steps.Step title="Hoàn tất" />
-        </Steps>
-
-        {renderCheckoutContent}
+        <Row>
+          <Col span={2}></Col>
+          <Col
+            style={{ backgroundColor: "#fff", padding: "12px 20px" }}
+            span={20}
+          >
+            <Steps current={step}>
+              <Steps.Step
+                className="step_items"
+                title="Giỏ hàng"
+                icon={<FaShoppingCart />}
+              />
+              <Steps.Step
+                title="Thông tin khách hàng"
+                icon={<HiInformationCircle />}
+              />
+              <Steps.Step title="Thanh Toán" icon={<BsBagCheckFill />} />
+              <Steps.Step title="Hoàn tất" icon={<FaCheckCircle />} />
+            </Steps>
+          </Col>
+          <Col span={2}></Col>
+        </Row>
+        <Row>
+          <Col span={2}></Col>
+          <Col span={20}>{renderCheckoutContent}</Col>
+          <Col span={2}></Col>
+        </Row>
       </S.Wrapper>
     </>
   );

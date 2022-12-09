@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  FreeMode,
+} from "swiper";
 
 import { SLIDER_LINK } from "./constant";
 import * as S from "./styles";
@@ -21,11 +28,16 @@ const BrandSlider = () => {
   return (
     <S.BrandSlider>
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, FreeMode]}
         loop={true}
         spaceBetween={30}
-        autoplay={{ delay: 2000 }}
-        speed={800}
+        speed={1500}
+        freeMode={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         grabCursor={true}
         breakpoints={{
           480: {

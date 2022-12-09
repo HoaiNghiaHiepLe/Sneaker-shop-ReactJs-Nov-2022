@@ -1,15 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Dropdown, Menu, Button, Badge, Avatar, Image, Row, Col } from "antd";
-import { ShoppingCartOutlined, LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 
+import CartDropDown from "./components/CartDropDown";
 import logoImage from "../../../assets/images/sneaker-world-golden.png";
 import { HEADER_ITEMS } from "./constants";
 import { ROUTES } from "../../../constants/routes";
 import { logoutAction } from "../../../redux/actions";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaShoppingCart } from "react-icons/fa";
 import * as S from "./styles";
 
 export default function Header(props) {
@@ -29,7 +30,7 @@ export default function Header(props) {
       return (
         <li key={index}>
           <S.HeaderItem to={item.path} $active={pathname === item.path}>
-            <span>{item.title}</span>
+            <span className="header_title_link">{item.title}</span>
           </S.HeaderItem>
         </li>
       );
@@ -95,21 +96,25 @@ export default function Header(props) {
               <ul>{renderHeaderItems()}</ul>
             </div>
             <div className="user_container">
-              <Badge count={cartList.length}>
-                <Button
-                  className="cart_btn"
-                  type="text"
-                  icon={<ShoppingCartOutlined />}
-                  onClick={() => navigate(ROUTES.USER.CHECKOUT)}
-                ></Button>
-              </Badge>
+              <div className="cart_containter">
+                <Badge count={cartList.length}>
+                  <div className="cart_btn" type="text">
+                    <FaShoppingCart />
+                  </div>
+                  <div className="cart_container_dropdown">
+                    <CartDropDown cartList={cartList} />
+                  </div>
+                </Badge>
+              </div>
+
               {userInfo.data.id ? (
                 <Dropdown overlay={menu}>
                   <div className="user_info">
                     <h2>{userInfo.data.fullName}</h2>
                     <Avatar
                       className="user_avatar"
-                      src={<Image src="https://joeschmoe.io/api/v1/random" />}
+                      icon={<UserOutlined />}
+                      style={{ backgroundColor: "royalblue" }}
                     />
                   </div>
                 </Dropdown>

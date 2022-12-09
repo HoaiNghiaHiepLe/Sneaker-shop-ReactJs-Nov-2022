@@ -12,13 +12,13 @@ const cartReducer = createReducer(initialState, {
   [REQUEST(CART_ACTION.ADD_TO_CART)]: (state, action) => {
     let newCartList = [...state.cartList];
     const { productId, quantity } = action.payload;
-    const exitProductIndex = state.cartList.findIndex(
+    const existProductIndex = state.cartList.findIndex(
       (item) => item.productId === productId
     );
-    if (exitProductIndex !== -1) {
-      newCartList.splice(exitProductIndex, 1, {
-        ...state.cartList[exitProductIndex],
-        quantity: state.cartList[exitProductIndex].quantity + quantity,
+    if (existProductIndex !== -1) {
+      newCartList.splice(existProductIndex, 1, {
+        ...state.cartList[existProductIndex],
+        quantity: state.cartList[existProductIndex].quantity + quantity,
       });
     } else {
       newCartList = [action.payload, ...state.cartList];
@@ -33,12 +33,12 @@ const cartReducer = createReducer(initialState, {
   [REQUEST(CART_ACTION.UPDATE_CART_ITEM)]: (state, action) => {
     const newCartList = [...state.cartList];
     const { productId, quantity } = action.payload;
-    const exitProductIndex = state.cartList.findIndex(
+    const existProductIndex = state.cartList.findIndex(
       (item) => item.productId === productId
     );
-    if (exitProductIndex !== -1) {
-      newCartList.splice(exitProductIndex, 1, {
-        ...state.cartList[exitProductIndex],
+    if (existProductIndex !== -1) {
+      newCartList.splice(existProductIndex, 1, {
+        ...state.cartList[existProductIndex],
         quantity: quantity,
       });
     }

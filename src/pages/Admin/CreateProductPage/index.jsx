@@ -27,7 +27,7 @@ import {
   onPreview,
   convertBase64ToImage,
   convertImageToBase64,
-} from "../../../utils/file";
+} from "../../../utils/function/file";
 import * as S from "./styles";
 
 const AdminCreateProductPage = () => {

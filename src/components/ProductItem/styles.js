@@ -1,4 +1,13 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const fadeCrossing = keyframes`
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const ProductContainer = styled.div`
   display: flex;
@@ -8,11 +17,14 @@ export const ProductContainer = styled.div`
   &:hover {
     box-shadow: rgb(149 157 165 / 50%) 0px 8px 24px;
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
+    transition-duration: 1200ms;
+
     &:hover {
       h3,
       .product_category h4 {
         color: royalblue;
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
+        transition-duration: 1200ms;
       }
     }
   }
@@ -22,15 +34,13 @@ export const ProductContainer = styled.div`
   .product_list_img_ratio {
     position: relative;
     padding-top: 100%;
-    .visible_img {
-      display: ${(props) => (props.imageChange ? "none" : "block")};
-      opacity: ${(props) => (props.imageChange ? 0 : 1)};
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
-    }
-    .hidden_img {
+    .toggle_img {
       display: ${(props) => (props.imageChange ? "block" : "none")};
-      opacity: ${(props) => (props.imageChange ? 1 : 0)};
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;
+      animation: ${(props) =>
+        props.imageChange &&
+        css`
+          ${fadeCrossing} .5s linear
+        `};
     }
     .product_list_img {
       max-width: 100%;
@@ -105,8 +115,11 @@ export const ProductContainer = styled.div`
       flex-direction: column;
       align-items: flex-start;
       span {
-        color: rgb(0, 40, 120);
+        color: var(--dark-text-color);
         font-size: 14px;
+        s {
+          color: var(--text-disabled);
+        }
       }
       & s {
         letter-spacing: 1px;

@@ -33,6 +33,7 @@ import {
 
 import { ROUTES, TITLES } from "../../../constants/";
 import * as S from "./styles";
+import { Fade } from "react-bootstrap";
 
 const UserHomePage = () => {
   const { productList } = useSelector((state) => state.product);
@@ -166,7 +167,12 @@ const UserHomePage = () => {
               // allowSlideNext={false}
               // allowSlidePrev={false}
               grabCursor={true}
-              autoplay={{ delay: 1500 }}
+              speed={1200}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }}
               loop={true}
               className="mySwiper"
             >

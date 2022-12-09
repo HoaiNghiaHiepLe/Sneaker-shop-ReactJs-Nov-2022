@@ -12,7 +12,7 @@ import {
   onPreview,
   convertBase64ToImage,
   convertImageToBase64,
-} from "../../../utils/file";
+} from "../../../utils/function/file";
 import { ROUTES, TITLES } from "../../../constants/";
 import {
   updateBlogAction,

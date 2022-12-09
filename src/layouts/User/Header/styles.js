@@ -202,26 +202,41 @@ export const HeaderContainer = styled.header`
           margin: 0 10px;
         }
       }
-      .cart_btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 40px;
-        padding: 4.9px 0;
-        font-size: 18px;
-        min-width: 40px;
-        border-radius: 50%;
-        background-color: #fff;
-        touch-action: manipulation;
-        cursor: pointer;
-        border: 2px solid #d9d9d9;
+      .cart_containter {
+        .cart_btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          padding: 4.9px 0;
+          font-size: 24px;
+          min-width: 40px;
+          border-radius: 50%;
+          touch-action: manipulation;
+          cursor: pointer;
+        }
+        & .cart_container_dropdown {
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+          top: 100px;
+          right: 0;
+          width: 500px;
+          transition: all 0.3s ease;
+          transition-delay: 0.2s;
+        }
+        &:hover .cart_container_dropdown {
+          opacity: 1;
+          visibility: visible;
+          top: calc(100% + 15px);
+        }
       }
     }
   }
 `;
 
 export const HeaderItem = styled(Link)`
-  & span {
+  & .header_title_link {
     ${(props) =>
       props.$active &&
       css`

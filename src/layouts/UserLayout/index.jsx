@@ -18,7 +18,7 @@ export default function UserLayout(props) {
   const { userInfo } = useSelector((state) => state.user);
 
   const setHeader = () => {
-    if (window.scrollY > 400) {
+    if (window.scrollY > 300) {
       setSticky(true);
     } else {
       setSticky(false);

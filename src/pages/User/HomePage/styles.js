@@ -13,7 +13,7 @@ export const CarouselContainer = styled.div`
     padding: 0;
     z-index: 1;
     width: 100%;
-    .swiper_wrapper {
+    /* .swiper_wrapper {
       position: relative;
       width: 100%;
       height: 100%;
@@ -23,21 +23,12 @@ export const CarouselContainer = styled.div`
       transition-property: transform;
       transition-property: transform, -webkit-transform;
       box-sizing: content-box;
-    }
+    } */
   }
   .swiper-slide {
     .ratio_img {
       position: relative;
-      padding-top: 62.5%;
-      @media ${DEVICE.DESKTOP_XXL} {
-        padding-top: 32.5%;
-      }
-      @media ${DEVICE.DESKTOP_XL} {
-        padding-top: 42.5%;
-      }
-      @media ${DEVICE.TABLET} {
-        padding-top: 52.5%;
-      }
+      padding-top: 32.5%;
       img {
         max-width: 100%;
         position: absolute;
