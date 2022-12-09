@@ -28,9 +28,9 @@ import * as S from "./styles";
 
 const Cart = ({ setStep }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { cartList } = useSelector((state) => state.cart);
+  console.log("🚀 ~ file: index.jsx:33 ~ Cart ~ cartList", cartList);
 
   return (
     <>

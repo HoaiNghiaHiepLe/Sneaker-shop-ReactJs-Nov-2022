@@ -34,7 +34,7 @@ import {
   getProductListAction,
   getCategoryListAction,
 } from "../../../redux/actions";
-import SyncSlider from "../../../components/SyncSlider";
+import SyncSlider from "./components/SyncSlider";
 import ReviewItem from "./components/ReviewItem";
 import ImageSlider from "./components/ImageSlider";
 import TopWrapper from "../../../components/TopWrapper";
@@ -193,13 +193,13 @@ const ProductDetailPage = () => {
   };
 
   const renderProductList = () => {
-    const compareProduct = productList.data.filter((item) => {
+    const similarProductList = productList.data.filter((item) => {
       return (
         item.categoryId === productDetail?.data?.categoryId &&
         item.id !== productId
       );
     });
-    return compareProduct?.map((item) => {
+    return similarProductList?.map((item) => {
       return (
         <Col
           style={{ marginTop: "20px" }}

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Image, Space, Row, Col } from "antd";
 import Slider from "react-slick";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import { SLIDER_IMAGE } from "./constant";
 
 import * as S from "./styles";
 const SyncSlider = ({ images }) => {
