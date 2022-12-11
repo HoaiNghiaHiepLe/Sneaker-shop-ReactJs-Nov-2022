@@ -18,30 +18,37 @@ const CartItem = ({ cartInfo }) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
-  const handleDeleteCartItem = (productId) => {
+  const handleDeleteCartItem = (productId, optionId) => {
     setShowModal(true);
     if (showModal) {
       return Modal.confirm({
         title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng?",
         onOk: () => {
-          dispatch(deleteCartItemAction({ productId: productId }));
+          dispatch(
+            deleteCartItemAction({
+              productId: productId,
+              optionId: optionId,
+            })
+          );
         },
       });
     }
   };
 
-  const handleChangeQuantityBtn = (productId, quantity, type) => {
+  const handleChangeQuantityBtn = (productId, optionId, quantity, type) => {
     dispatch(
       updateCartItemAction({
         productId: productId,
+        optionId: optionId,
         quantity: type === "plus" ? quantity + 1 : quantity - 1,
       })
     );
   };
-  const handleChangeQuantityInput = (productId, quantity) => {
+  const handleChangeQuantityInput = (productId, optionId, quantity) => {
     dispatch(
       updateCartItemAction({
         productId: productId,
+        optionId: optionId,
         quantity: quantity,
       })
     );
@@ -100,6 +107,7 @@ const CartItem = ({ cartInfo }) => {
                   if (cartInfo.quantity === 1) return null;
                   handleChangeQuantityBtn(
                     cartInfo.productId,
+                    cartInfo.optionId,
                     cartInfo.quantity,
                     "minus"
                   );
@@ -111,16 +119,22 @@ const CartItem = ({ cartInfo }) => {
                 defaultValue={cartInfo.quantity}
                 value={cartInfo.quantity}
                 onChange={(quantity) => {
-                  if (quantity > cartInfo.amount) return null;
-                  handleChangeQuantityInput(cartInfo.productId, quantity);
+                  if (quantity > cartInfo.sizeQuantity) return null;
+                  handleChangeQuantityInput(
+                    cartInfo.productId,
+                    cartInfo.optionId,
+                    quantity
+                  );
                 }}
               />
               <S.ChangeQuantityBtn
                 icon={<TiPlus />}
                 onClick={() => {
-                  if (cartInfo.quantity > cartInfo.amount - 1) return null;
+                  if (cartInfo.quantity > cartInfo.sizeQuantity - 1)
+                    return null;
                   handleChangeQuantityBtn(
                     cartInfo.productId,
+                    cartInfo.optionId,
                     cartInfo.quantity,
                     "plus"
                   );
@@ -138,7 +152,11 @@ const CartItem = ({ cartInfo }) => {
           </Col>
           <Col span={2}>
             <div className="item_action">
-              <Button onClick={() => handleDeleteCartItem(cartInfo.productId)}>
+              <Button
+                onClick={() =>
+                  handleDeleteCartItem(cartInfo.productId, cartInfo.optionId)
+                }
+              >
                 <FaTrash className="delete_icon" />
               </Button>
             </div>

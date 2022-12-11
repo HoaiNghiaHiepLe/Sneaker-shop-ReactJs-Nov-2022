@@ -16,13 +16,18 @@ const CartDropDown = ({ cartList }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
-  const handleDeleteCartItem = (productId) => {
+  const handleDeleteCartItem = (productId, optionId) => {
     setShowModal(true);
     if (showModal) {
       return Modal.confirm({
         title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng?",
         onOk: () => {
-          dispatch(deleteCartItemAction({ productId: productId }));
+          dispatch(
+            deleteCartItemAction({
+              productId: productId,
+              optionId: optionId,
+            })
+          );
           notification.warn({
             message: "Đã xoá sản phẩm khỏi giỏ hàng",
             placement: "top",
@@ -35,9 +40,9 @@ const CartDropDown = ({ cartList }) => {
   };
 
   const renderCartItems = () => {
-    return cartList.map((item) => {
+    return cartList.map((item, index) => {
       return (
-        <S.CartItemContainer key={item.productId}>
+        <S.CartItemContainer key={index}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAILS, {
               id: `${item.slug}.${item.productId}`,
@@ -55,6 +60,7 @@ const CartDropDown = ({ cartList }) => {
               >
                 <h3 className="product_name">{item.productName}</h3>
               </Tooltip>
+              <h3 className="product_name">Size: {item.size}</h3>
               <div className="product_quantity">
                 <span className="product_amount">
                   Số lượng: {item.quantity}
@@ -75,7 +81,7 @@ const CartDropDown = ({ cartList }) => {
             className="cart_item_action"
             onClick={(e) => {
               e.stopPropagation();
-              handleDeleteCartItem(item.productId);
+              handleDeleteCartItem(item.productId, item.optionId);
             }}
           >
             <Tooltip title="Xóa sản phẩm khỏi giỏ">

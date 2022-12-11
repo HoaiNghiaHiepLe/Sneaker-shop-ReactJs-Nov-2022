@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Card,
   Row,
@@ -53,13 +53,23 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const [reviewForm] = Form.useForm();
 
-  const [productInfos, setProductInfos] = useState({
-    size: undefined,
-    quantity: 1,
-  });
+  const [selectedOptionId, setSelectedOptionId] = useState("");
+  const [productQuantity, setProductQuantity] = useState(1);
 
   const [error, setError] = useState(false);
   const { productDetail, productList } = useSelector((state) => state.product);
+  const { cartList } = useSelector((state) => state.cart);
+  const hasOptions = !!productDetail.data.options?.length;
+  const selectedProductCart = cartList?.find(
+    (item) => item.optionId === selectedOptionId
+  );
+  const selectedOptionData = productDetail.data.options?.find(
+    (item) => item.id === selectedOptionId
+  );
+
+  const bonusPrice = selectedOptionData ? selectedOptionData.bonusPrice : 0;
+  const productPrice = (productDetail.data.price || 0) + bonusPrice;
+
   const { userInfo } = useSelector((state) => state.user);
   const { reviewList } = useSelector((state) => state.review);
   const { state } = useLocation();
@@ -76,6 +86,12 @@ const ProductDetailPage = () => {
 
     document.title = TITLES.USER.PRODUCT_DETAILS;
   }, [productId]);
+
+  // useEffect(() => {
+  //   if (hasOptions) {
+  //     setSelectedOptionId(productDetail.data.options[0].id);
+  //   }
+  // }, [productDetail.data, hasOptions]);
 
   useEffect(() => {
     if (state?.categoryId?.length) {
@@ -123,13 +139,21 @@ const ProductDetailPage = () => {
   };
 
   const handleAddToCart = () => {
-    productInfos.size === undefined
+    selectedOptionData === undefined ||
+    productQuantity > selectedOptionData?.sizeQuantity ||
+    productQuantity + selectedProductCart?.quantity >
+      selectedOptionData?.sizeQuantity
       ? setError(true)
       : dispatch(
           addToCartAction({
+            ...(selectedOptionData && {
+              optionId: selectedOptionData.id,
+              size: selectedOptionData.size,
+              sizeQuantity: selectedOptionData.sizeQuantity,
+              optionName: selectedOptionData.name,
+            }),
+            quantity: productQuantity,
             productId: productId,
-            quantity: productInfos.quantity,
-            size: productInfos.size,
             price: productDetail.data.price,
             productBrand: productDetail.data.category?.name,
             productName: productDetail.data.name,
@@ -233,6 +257,17 @@ const ProductDetailPage = () => {
       );
     });
   };
+
+  const renderProductOptions = useMemo(() => {
+    if (!productDetail.data.options?.length) return null;
+    return productDetail.data.options?.map((item) => {
+      return (
+        <Radio key={item.id} value={item.id}>
+          {item.size}
+        </Radio>
+      );
+    });
+  }, [productDetail.data]);
 
   const TAB_ITEMS = [
     {
@@ -444,80 +479,88 @@ const ProductDetailPage = () => {
                         }`}
                       </div>
                     </Space>
-                    <div className="product_detail">{`Số lượng còn lại: ${productDetail.data.amount}`}</div>
-                    <div className="product_size">
-                      <b>Size: </b>
-                      <div className="size_group">
-                        {productDetail.data.size?.map((item) => {
-                          return (
-                            <Radio.Group
-                              className="size_select"
-                              style={{ paddingRight: "10px" }}
-                              key={item}
-                              size="large"
-                              buttonStyle="solid"
-                              value={productInfos.size}
-                              onChange={(e) => {
-                                setError(false);
-                                setProductInfos({
-                                  ...productInfos,
-                                  size: e.target.value,
-                                });
-                              }}
-                            >
-                              <Radio.Button value={item}>{item}</Radio.Button>
-                            </Radio.Group>
-                          );
-                        })}
-                      </div>
-                      <div>
-                        {error ? (
-                          <S.MessageError>Vui lòng chọn size</S.MessageError>
-                        ) : (
-                          ""
-                        )}
-                      </div>
+                    <div className="product_detail">
+                      {selectedOptionData ? (
+                        <p>
+                          Số lượng còn lại: {selectedOptionData?.sizeQuantity}
+                        </p>
+                      ) : (
+                        <S.MessageError>
+                          Chọn size để xem số lượng còn lại
+                        </S.MessageError>
+                      )}
                     </div>
+
+                    {hasOptions && (
+                      <div className="product_size">
+                        <b>Size: </b>
+                        <div className="size_group">
+                          <Radio.Group
+                            optionType="button"
+                            buttonStyle="solid"
+                            onChange={(e) => {
+                              setError(false);
+                              setSelectedOptionId(e.target.value);
+                            }}
+                          >
+                            {renderProductOptions}
+                          </Radio.Group>
+                        </div>
+                        <div>
+                          {error && selectedOptionData === undefined ? (
+                            <S.MessageError>Vui lòng chọn size</S.MessageError>
+                          ) : (
+                            ""
+                          )}
+                          {(error &&
+                            selectedProductCart?.quantity >=
+                              selectedOptionData?.sizeQuantity) ||
+                          productQuantity + selectedProductCart?.quantity >
+                            selectedOptionData?.sizeQuantity ? (
+                            <S.MessageError>
+                              Số lượng sản phẩm trong giỏ hàng đã đạt giới hạn
+                            </S.MessageError>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <div className="action_container">
-                      <Row gutter={(0, 0)}>
+                      <Row style={{ padding: "20px 0px" }} gutter={(0, 0)}>
                         <Col flex={3}>
                           <Row>
-                            <InputNumber
-                              style={{
-                                marginRight: "10px",
-                                marginTop: "10px",
-                                marginBottom: "10px",
-                              }}
-                              defaultValue={1}
-                              size="large"
-                              onChange={(value) =>
-                                setProductInfos({
-                                  ...productInfos,
-                                  quantity: value,
-                                })
-                              }
-                              value={productInfos.quantity}
-                              min={1}
-                              max={productDetail.data.amount}
-                            />
-                            <S.CustomBtn
-                              style={{
-                                marginTop: "10px",
-                                marginBottom: "10px",
-                              }}
-                              size="large"
-                              onClick={() => handleAddToCart()}
-                            >
-                              <AiOutlineShoppingCart
-                                style={{ marginRight: 8 }}
+                            <Col>
+                              <InputNumber
+                                size="large"
+                                min={1}
+                                max={selectedOptionData?.sizeQuantity}
+                                onChange={(value) => {
+                                  if (
+                                    productQuantity >
+                                    selectedOptionData?.sizeQuantity
+                                  )
+                                    return setProductQuantity(1);
+                                  setProductQuantity(value);
+                                }}
+                                value={productQuantity}
                               />
-                              Thêm vào giỏ hàng
-                            </S.CustomBtn>
+                            </Col>
+                            <Col>
+                              <S.CustomBtn
+                                size="large"
+                                onClick={() => handleAddToCart()}
+                              >
+                                <AiOutlineShoppingCart
+                                  style={{ marginRight: 8 }}
+                                />
+                                Thêm vào giỏ hàng
+                              </S.CustomBtn>
+                            </Col>
                           </Row>
                         </Col>
                         <Col style={{ flex: "0 2 auto" }} flex={2}>
                           <S.FavoritetBtn
-                            style={{ marginTop: "10px", marginBottom: "10px" }}
                             ghost={isLike}
                             danger={isLike}
                             size="large"

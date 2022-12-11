@@ -30,7 +30,6 @@ const Cart = ({ setStep }) => {
   const navigate = useNavigate();
 
   const { cartList } = useSelector((state) => state.cart);
-  console.log("🚀 ~ file: index.jsx:33 ~ Cart ~ cartList", cartList);
 
   return (
     <>
@@ -69,11 +68,11 @@ const Cart = ({ setStep }) => {
                     </Col>
                   </Row>
                   <S.CartItemContainer>
-                    {cartList.map((item) => {
+                    {cartList.map((item, index) => {
                       return (
                         <CartItem
                           style={{ backgroundColor: "#fff" }}
-                          key={item.productId}
+                          key={index}
                           cartInfo={item}
                         />
                       );
