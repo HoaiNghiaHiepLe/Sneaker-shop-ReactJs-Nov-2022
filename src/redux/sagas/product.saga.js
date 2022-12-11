@@ -9,7 +9,7 @@ function* getProductListSaga(action) {
     const result = yield axios.get("http://localhost:4000/products", {
       params: {
         _expand: "category",
-        _embed: ["images", "favorites"],
+        _embed: ["images", "favorites", "options"],
         _page: params.page,
         _limit: params.limit,
         ...(params.categoryId && {
@@ -62,7 +62,7 @@ function* getProductDetailSaga(action) {
     const result = yield axios.get(`http://localhost:4000/products/${id}`, {
       params: {
         _expand: "category",
-        _embed: ["images", "favorites"],
+        _embed: ["options", "images", "favorites"],
       },
     });
     yield put({
@@ -83,15 +83,25 @@ function* getProductDetailSaga(action) {
 
 function* createProductSaga(action) {
   try {
-    const { values, callback, images } = action.payload;
+    const { values, images, options, callback } = action.payload;
     const result = yield axios.post("http://localhost:4000/products", values);
+    // Images
     for (let i = 0; i < images.length; i++) {
       yield axios.post("http://localhost:4000/images", {
         ...images[i],
         productId: result.data.id,
       });
     }
-
+    // Options
+    for (let j = 0; j < options.length; j++) {
+      yield axios.post("http://localhost:4000/options", {
+        productId: result.data.id,
+        name: options[j].name,
+        size: options[j].size,
+        sizeQuantity: options[j].sizeQuantity,
+        bonusPrice: options[j].bonusPrice,
+      });
+    }
     yield put({
       type: SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT),
       payload: {
@@ -111,11 +121,20 @@ function* createProductSaga(action) {
 
 function* updateProductSaga(action) {
   try {
-    const { id, values, images, initialImageIds, callback } = action.payload;
+    const {
+      id,
+      values,
+      images,
+      initialImageIds,
+      options,
+      initialOptionIds,
+      callback,
+    } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/products/${id}`,
       values
     );
+    // Images
     for (let i = 0; i < images.length; i++) {
       if (!images[i].id) {
         yield axios.post("http://localhost:4000/images", {
@@ -131,6 +150,36 @@ function* updateProductSaga(action) {
       if (!keepImage) {
         yield axios.delete(
           `http://localhost:4000/images/${initialImageIds[j]}`
+        );
+      }
+    }
+    // Options
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].id) {
+        yield axios.patch(`http://localhost:4000/options/${options[i].id}`, {
+          productId: result.data.id,
+          name: options[i].name,
+          size: options[i].size,
+          sizeQuantity: options[i].sizeQuantity,
+          bonusPrice: options[i].bonusPrice,
+        });
+      } else {
+        yield axios.post("http://localhost:4000/options", {
+          productId: result.data.id,
+          name: options[i].name,
+          size: options[i].size,
+          sizeQuantity: options[i].sizeQuantity,
+          bonusPrice: options[i].bonusPrice,
+        });
+      }
+    }
+    for (let j = 0; j < initialOptionIds.length; j++) {
+      const keepOption = options.find(
+        (item) => item.id && item.id === initialOptionIds[j]
+      );
+      if (!keepOption) {
+        yield axios.delete(
+          `http://localhost:4000/options/${initialOptionIds[j]}`
         );
       }
     }

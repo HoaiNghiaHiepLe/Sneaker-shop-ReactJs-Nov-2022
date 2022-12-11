@@ -154,25 +154,59 @@ const AdminProductListPage = () => {
       render: (gender) => (gender === 1 ? "Nam" : "Nữ"),
     },
     {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-      render: (sizes) => (
+      title: "Size - Số lượng",
+      dataIndex: "size-quantity",
+      key: "size-quantity",
+      render: (_, record) => (
         <>
-          {sizes.map((size) => {
+          {record?.options?.map((item) => {
             return (
-              <Tag color="geekblue" key={size}>
-                {size}
-              </Tag>
+              <div
+                style={{
+                  display: "flex",
+                  flexFlow: "row wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                key={item.id}
+              >
+                <Tag
+                  style={{ marginBottom: "5px", minWidth: "30px" }}
+                  color="geekblue"
+                >
+                  {item.size}
+                </Tag>
+                <Tag
+                  style={{ marginBottom: "5px", minWidth: "30px" }}
+                  color="geekblue"
+                >
+                  {item.sizeQuantity}
+                </Tag>
+              </div>
             );
           })}
         </>
       ),
     },
     {
-      title: "Số lượng",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Tổng số lượng",
+      dataIndex: "totalQuantity",
+      key: "totalQuantity",
+      render: (_, record) => (
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <p>
+            {record?.options?.reduce((sum, item) => sum + item.sizeQuantity, 0)}
+          </p>
+        </div>
+      ),
     },
     {
       title: "Sản phẩm mới",
@@ -180,16 +214,38 @@ const AdminProductListPage = () => {
       key: "isNew",
       render: (isNew) =>
         isNew === true && (
-          <Tag color="royalblue" key={isNew}>
-            Mới
-          </Tag>
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "row wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Tag color="royalblue" key={isNew}>
+              Mới
+            </Tag>
+          </div>
         ),
     },
     {
       title: "Giảm giá",
       dataIndex: "discount",
       key: "discount",
-      render: (discount) => (discount === undefined ? 0 : `${discount}%`),
+      render: (discount) => (
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          {discount === undefined ? 0 : `${discount}%`}
+        </div>
+      ),
     },
     {
       title: "Hành động",
@@ -237,6 +293,7 @@ const AdminProductListPage = () => {
             dataSource={tableData}
             pagination={false}
             style={{ flex: 1 }}
+            className="admin_product_table"
           />
           <Pagination
             current={productList.meta.page}

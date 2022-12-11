@@ -340,11 +340,12 @@ export const CustomBtn = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-left: 20px;
   &:hover {
     background-color: #6486ed;
     color: #fff;
     transform: scale(1.2);
-    margin: 20px;
+    margin-left: 40px;
     transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
     transition-duration: 1200ms;
   }
@@ -360,7 +361,7 @@ export const FavoritetBtn = styled(Button)`
     background-color: #6486ed;
     color: #fff;
     transform: scale(1.2);
-    margin: 20px;
+    margin-right: 20px;
     transition: all 1200ms cubic-bezier(0.34, 1.61, 0.7, 1);
     transition-duration: 1200ms;
   }

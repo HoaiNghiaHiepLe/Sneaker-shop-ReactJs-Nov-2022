@@ -5,6 +5,16 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  .admin_product_table {
+    .ant-table-cell {
+      text-align: center;
+    }
+    tr {
+      td:nth-child(2) {
+        text-align: left;
+      }
+    }
+  }
 `;
 
 export const TopWrapper = styled.div`
