@@ -1,5 +1,7 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Button, InputNumber } from "antd";
+import { RiArrowDownSLine } from "react-icons/ri";
+
 // export const CustomOutlinePlus = styled(AiOutlinePlus)`
 //   cursor: pointer;
 
@@ -127,8 +129,7 @@ export const CartItemWrapper = styled.div`
   }
   .item_size {
     cursor: pointer;
-    .size_selector{
-      
+    .size_selector {
     }
   }
 `;
@@ -173,5 +174,39 @@ export const ChangeQuantityInput = styled(InputNumber)`
   }
   .ant-input-number-input {
     text-align: center;
+  }
+`;
+export const SizeSelectorIcon = styled(RiArrowDownSLine)`
+  margin-left: 3px;
+  margin-top: 3px;
+  font-size: 18px;
+  color: var(--primary-color);
+  ${(props) =>
+    props.$showModal &&
+    css`
+      transform: rotate(-180deg);
+      animation: ${rotation} 0.5s linear;
+    `};
+`;
+const rotation = keyframes`
+  0% {
+    transform: rotate(0deg);
+    transform: scale(1);
+  }
+  25% {
+    transform: rotate(-30deg);
+    transform: scale(2);
+  }
+  50% {
+    transform: rotate(-60deg);
+    transform: scale(3);
+  }
+  75% {
+    transform: rotate(-90deg);
+    transform: scale(2);
+  }
+  100%{
+    transform: scale(1);
+    transform: rotate(-150deg);
   }
 `;

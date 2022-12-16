@@ -20,3 +20,10 @@ export const getDifference = (array1, array2) => {
     });
   });
 };
+export const getDifference2 = (array1, array2) => {
+  return array1?.filter((object1) => {
+    return !array2?.some((object2) => {
+      return object1.id === object2.id;
+    });
+  });
+};
