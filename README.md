@@ -1,6 +1,9 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# Technologies in use
+
+FE: React JS Library
+BE: Rest API JSON server
 
 # All steps to install and start this project
 
