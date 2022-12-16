@@ -47,6 +47,7 @@ const cartReducer = createReducer(initialState, {
   [REQUEST(CART_ACTION.UPDATE_CART_ITEM)]: (state, action) => {
     const newCartList = [...state.cartList];
     const { productId, quantity, optionId } = action.payload;
+
     const existProductIndex = state.cartList.findIndex(
       (item) =>
         item.productId === productId &&
@@ -58,6 +59,42 @@ const cartReducer = createReducer(initialState, {
         quantity: quantity,
       });
     }
+    localStorage.setItem("cart", JSON.stringify(newCartList));
+    return {
+      ...state,
+      cartList: newCartList,
+    };
+  },
+
+  [REQUEST(CART_ACTION.CHANGE_CART_ITEM)]: (state, action) => {
+    const newCartList = [...state.cartList];
+    const {
+      productId,
+      quantity,
+      optionId,
+      size,
+      sizeQuantity,
+      optionName,
+      onClickId,
+    } = action.payload;
+    const changeProductOptions = state.cartList.findIndex(
+      (item) =>
+        item.productId === productId &&
+        (optionId ? item.optionId !== optionId : true) &&
+        (onClickId ? item.optionId === onClickId : true)
+    );
+    if (changeProductOptions !== -1) {
+      newCartList.splice(changeProductOptions, 1, {
+        ...state.cartList[changeProductOptions],
+        quantity: quantity,
+        optionId: optionId,
+        size: size,
+        sizeQuantity: sizeQuantity,
+        optionName: optionName,
+        onClickId: onClickId,
+      });
+    }
+
     localStorage.setItem("cart", JSON.stringify(newCartList));
     return {
       ...state,

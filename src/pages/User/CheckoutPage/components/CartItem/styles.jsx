@@ -125,6 +125,12 @@ export const CartItemWrapper = styled.div`
       }
     }
   }
+  .item_size {
+    cursor: pointer;
+    .size_selector{
+      
+    }
+  }
 `;
 
 export const CartItemContent = styled.div`
