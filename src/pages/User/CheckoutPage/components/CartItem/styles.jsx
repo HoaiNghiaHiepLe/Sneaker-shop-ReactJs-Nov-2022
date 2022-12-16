@@ -185,7 +185,7 @@ export const SizeSelectorIcon = styled(RiArrowDownSLine)`
     props.$showModal &&
     css`
       transform: rotate(-180deg);
-      animation: ${rotation} 0.5s linear;
+      animation: ${rotation} 0.3s linear;
     `};
 `;
 const rotation = keyframes`

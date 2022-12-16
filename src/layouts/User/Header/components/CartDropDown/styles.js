@@ -61,7 +61,7 @@ export const CartContainer = styled.div`
   .cart_action_container {
     background-color: royalblue;
     &:hover {
-      background-color: #6486ed;
+      background-color: #a8071a;
       a {
         transform: scale(1.2);
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1) 0.15s;

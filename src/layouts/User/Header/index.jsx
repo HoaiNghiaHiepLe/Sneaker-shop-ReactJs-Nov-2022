@@ -6,6 +6,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 
 import CartDropDown from "./components/CartDropDown";
+import UserDropDown from "./components/UserDropDown";
 import logoImage from "../../../assets/images/sneaker-world-golden.png";
 import { HEADER_ITEMS } from "./constants";
 import { ROUTES } from "../../../constants/routes";
@@ -95,8 +96,8 @@ export default function Header(props) {
             <div className="navbar_menu">
               <ul>{renderHeaderItems()}</ul>
             </div>
-            <div className="user_container">
-              <div className="cart_containter">
+            <div className="user_data_container">
+              <div className="user_cart_containter">
                 <Badge count={cartList.length}>
                   <div className="cart_btn" type="text">
                     <FaShoppingCart />
@@ -106,23 +107,27 @@ export default function Header(props) {
                   </div>
                 </Badge>
               </div>
-
-              {userInfo.data.id ? (
-                <Dropdown overlay={menu}>
-                  <div className="user_info">
-                    <h2>{userInfo.data.fullName}</h2>
-                    <Avatar
-                      className="user_avatar"
-                      icon={<UserOutlined />}
-                      style={{ backgroundColor: "royalblue" }}
-                    />
-                  </div>
-                </Dropdown>
-              ) : (
-                <S.LoginBtn onClick={() => navigate(ROUTES.LOGIN)}>
-                  Đăng nhập
-                </S.LoginBtn>
-              )}
+              <div className="user_info_container">
+                {userInfo.data.id ? (
+                  <>
+                    <div className="user_info">
+                      <h2>{userInfo.data.fullName}</h2>
+                      <Avatar
+                        className="user_avatar"
+                        icon={<UserOutlined />}
+                        style={{ backgroundColor: "royalblue" }}
+                      />
+                    </div>
+                    <div className="User_container_dropdown">
+                      <UserDropDown userInfo={userInfo} />
+                    </div>
+                  </>
+                ) : (
+                  <S.LoginBtn onClick={() => navigate(ROUTES.LOGIN)}>
+                    Đăng nhập
+                  </S.LoginBtn>
+                )}
+              </div>
             </div>
           </div>
         </Col>
