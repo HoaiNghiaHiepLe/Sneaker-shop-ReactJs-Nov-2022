@@ -3,6 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 # Technologies in use
 
 FE: React JS Library
+<br/>
 BE: Rest API JSON server
 
 # All steps to install and start this project
