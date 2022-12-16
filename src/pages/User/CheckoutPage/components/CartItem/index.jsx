@@ -1,59 +1,157 @@
-import { Row, Col, Image, Modal, Button, InputNumber, Space } from "antd";
+import { Fragment } from "react";
+import { Row, Col, Button, notification, Popconfirm, Radio, Modal } from "antd";
 import { useDispatch } from "react-redux";
 import { Link, generatePath } from "react-router-dom";
 import { useState } from "react";
 
 import {
+  changeCartItemAction,
   deleteCartItemAction,
   updateCartItemAction,
 } from "../../../../../redux/actions";
-import { calcPrice, calcDiscount } from "../../../../../utils/function/product";
-import { ROUTES, TITLES } from "../../../../../constants/";
+import {
+  calcPrice,
+  calcDiscount,
+  getDifference,
+} from "../../../../../utils/function/product";
+import { ROUTES } from "../../../../../constants/";
 import { FaTrash } from "react-icons/fa";
 import { TiMinus, TiPlus } from "react-icons/ti";
 
 import * as S from "./styles";
 
-const CartItem = ({ cartInfo }) => {
+const CartItem = ({ cartList, cartInfo, productList }) => {
   const dispatch = useDispatch();
+  const [onClickId, setOnClickId] = useState();
+
   const [showModal, setShowModal] = useState(false);
+  const [selectedOptionId, setSelectedOptionId] = useState("");
+
+  const selectedProduct = productList.data?.find(
+    (item) => item.id === cartInfo.productId
+  );
+  const selectedOptionData = selectedProduct?.options?.find(
+    (item) => item.id === selectedOptionId
+  );
 
   const handleDeleteCartItem = (productId, optionId) => {
-    setShowModal(true);
-    if (showModal) {
-      return Modal.confirm({
-        title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng?",
-        onOk: () => {
-          dispatch(
-            deleteCartItemAction({
-              productId: productId,
+    dispatch(
+      deleteCartItemAction({
+        productId: productId,
+        optionId: optionId,
+      })
+    );
+    notification.warn({
+      message: "Đã xóa sản phẩm vào giỏ hàng",
+      placement: "top",
+      top: 100,
+      duration: 2,
+    });
+  };
+  const handleChangeProductOptions = (productId, optionId) => {
+    dispatch(
+      changeCartItemAction({
+        productId: productId,
+        quantity: 1,
+        ...(selectedOptionData
+          ? {
+              optionId: selectedOptionData.id,
+              size: selectedOptionData.size,
+              sizeQuantity: selectedOptionData.sizeQuantity,
+              optionName: selectedOptionData.name,
+              onClickId: parseInt(onClickId),
+            }
+          : {
               optionId: optionId,
-            })
-          );
-        },
-      });
+            }),
+      })
+    );
+  };
+  const handleChangeQuantityBtn = (productId, optionId, quantity, type) => {
+    if (quantity > cartInfo?.sizeQuantity) return null;
+    else {
+      dispatch(
+        updateCartItemAction({
+          productId: productId,
+          optionId: optionId,
+          quantity: type === "plus" ? quantity + 1 : quantity - 1,
+        })
+      );
+    }
+  };
+  const handleChangeQuantityInput = (productId, optionId, quantity) => {
+    if (quantity > cartInfo?.sizeQuantity) return null;
+    else {
+      dispatch(
+        updateCartItemAction({
+          productId: productId,
+          optionId: optionId,
+          quantity: quantity,
+        })
+      );
     }
   };
 
-  const handleChangeQuantityBtn = (productId, optionId, quantity, type) => {
-    dispatch(
-      updateCartItemAction({
-        productId: productId,
-        optionId: optionId,
-        quantity: type === "plus" ? quantity + 1 : quantity - 1,
-      })
+  const renderDisableProductOptions = () => {
+    if (!cartList?.length) return null;
+    return cartList?.map((item) => {
+      return (
+        <Fragment key={item.optionId}>
+          <Radio disabled key={item.id} value={item.id}>
+            {item.size}
+          </Radio>
+        </Fragment>
+      );
+    });
+  };
+  const renderAvailableProductOptions = () => {
+    const availableProduct = selectedProduct?.options?.map((item) => item);
+    const availableOptions = getDifference(availableProduct, cartList);
+    if (!availableOptions?.length) return null;
+    return availableOptions?.map((item) => {
+      return (
+        <Fragment key={item.id}>
+          {availableOptions && (
+            <Radio key={item.id} value={item.id}>
+              {item.size}
+            </Radio>
+          )}
+        </Fragment>
+      );
+    });
+  };
+  const renderProductOptions = () => {
+    const availableProduct = selectedProduct?.options?.map((item) => item);
+    const availableOptions = getDifference(availableProduct, cartList);
+    if (!cartList?.length) return null;
+    if (!availableOptions?.length) return null;
+    return (
+      <>
+        <Radio.Group
+          optionType="button"
+          buttonStyle="solid"
+          onChange={(e) => {
+            setSelectedOptionId(e.target.value);
+          }}
+        >
+          {availableOptions?.map((item) => {
+            return (
+              <Radio key={item.id} value={item.id}>
+                {item.size}
+              </Radio>
+            );
+          })}
+          {cartList?.map((item) => {
+            return (
+              <Radio key={item.optionId} disabled value={item.id}>
+                {item.size}
+              </Radio>
+            );
+          })}
+        </Radio.Group>
+      </>
     );
   };
-  const handleChangeQuantityInput = (productId, optionId, quantity) => {
-    dispatch(
-      updateCartItemAction({
-        productId: productId,
-        optionId: optionId,
-        quantity: quantity,
-      })
-    );
-  };
-
   return (
     <>
       <S.CartItemWrapper>
@@ -82,7 +180,41 @@ const CartItem = ({ cartInfo }) => {
             <div className="item_brand">{cartInfo.productBrand}</div>
           </Col>
           <Col span={3}>
-            <div className="item_size">{cartInfo.size}</div>
+            <div
+              id={cartInfo.optionId}
+              onClick={(event) => {
+                setShowModal(true);
+                setOnClickId(event.currentTarget.id);
+              }}
+              className="item_size"
+            >
+              {cartInfo.size}
+            </div>
+            <Modal
+              title="Chọn size sản phẩm"
+              centered
+              open={showModal}
+              onOk={() => {
+                setShowModal(false);
+                handleChangeProductOptions(
+                  cartInfo.productId,
+                  cartInfo.optionId
+                );
+              }}
+              onCancel={() => setShowModal(false)}
+            >
+              <div className="size_selector">
+                {/* <Radio.Group
+                  optionType="button"
+                  buttonStyle="solid"
+                  onChange={(e) => {
+                    setSelectedOptionId(e.target.value);
+                  }}
+                > */}
+                {renderProductOptions()}
+                {/* </Radio.Group> */}
+              </div>
+            </Modal>
           </Col>
           <Col span={3}>
             <div className="item_price">
@@ -115,11 +247,10 @@ const CartItem = ({ cartInfo }) => {
               ></S.ChangeQuantityBtn>
               <S.ChangeQuantityInput
                 min={1}
-                max={cartInfo.amount}
                 defaultValue={cartInfo.quantity}
                 value={cartInfo.quantity}
                 onChange={(quantity) => {
-                  if (quantity > cartInfo.sizeQuantity) return null;
+                  if (quantity > selectedOptionData?.sizeQuantity) return null;
                   handleChangeQuantityInput(
                     cartInfo.productId,
                     cartInfo.optionId,
@@ -130,14 +261,15 @@ const CartItem = ({ cartInfo }) => {
               <S.ChangeQuantityBtn
                 icon={<TiPlus />}
                 onClick={() => {
-                  if (cartInfo.quantity > cartInfo.sizeQuantity - 1)
-                    return null;
-                  handleChangeQuantityBtn(
-                    cartInfo.productId,
-                    cartInfo.optionId,
-                    cartInfo.quantity,
-                    "plus"
-                  );
+                  if (cartInfo.quantity >= cartInfo?.sizeQuantity) return null;
+                  else {
+                    handleChangeQuantityBtn(
+                      cartInfo.productId,
+                      cartInfo.optionId,
+                      cartInfo.quantity,
+                      "plus"
+                    );
+                  }
                 }}
               ></S.ChangeQuantityBtn>
             </div>
@@ -152,13 +284,18 @@ const CartItem = ({ cartInfo }) => {
           </Col>
           <Col span={2}>
             <div className="item_action">
-              <Button
-                onClick={() =>
+              <Popconfirm
+                title="Xóa sản phẩm khỏi giỏ?"
+                okText="Ok"
+                cancelText="Hủy"
+                onConfirm={() =>
                   handleDeleteCartItem(cartInfo.productId, cartInfo.optionId)
                 }
               >
-                <FaTrash className="delete_icon" />
-              </Button>
+                <Button onClick={() => null}>
+                  <FaTrash className="delete_icon" />
+                </Button>
+              </Popconfirm>
             </div>
           </Col>
         </Row>

@@ -6,6 +6,9 @@ export const addToCartAction = createAction(REQUEST(CART_ACTION.ADD_TO_CART));
 export const updateCartItemAction = createAction(
   REQUEST(CART_ACTION.UPDATE_CART_ITEM)
 );
+export const changeCartItemAction = createAction(
+  REQUEST(CART_ACTION.CHANGE_CART_ITEM)
+);
 export const deleteCartItemAction = createAction(
   REQUEST(CART_ACTION.DELETE_CART_ITEM)
 );

@@ -9,7 +9,7 @@ import {
   Carousel,
   Select,
 } from "antd";
-import { useNavigate, Link, generatePath } from "react-router-dom";
+import { useNavigate, Link, generatePath, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import TopWrapper from "../../../components/TopWrapper";
@@ -20,8 +20,8 @@ import { BsBagCheckFill } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
 
 import {
-  updateCartItemAction,
-  deleteCartItemAction,
+  getProductListAction,
+  getCategoryListAction,
 } from "../../../redux/actions";
 
 import Cart from "./components/Cart";
@@ -31,9 +31,19 @@ import Success from "./components/Success";
 import * as S from "./styles";
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.title = TITLES.USER.CHECKOUT;
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+        },
+      })
+    );
   }, []);
+  const { productList } = useSelector((state) => state.product);
 
   const [step, setStep] = useState(0);
 

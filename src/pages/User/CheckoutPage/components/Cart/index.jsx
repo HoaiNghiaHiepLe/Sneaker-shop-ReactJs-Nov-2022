@@ -1,23 +1,8 @@
-import {
-  Row,
-  Button,
-  Table,
-  Input,
-  Col,
-  List,
-  Space,
-  Empty,
-  Image,
-} from "antd";
-import { useNavigate, Link, generatePath } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { Row, Input, Col, List, Empty, Image } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { ROUTES } from "../../../../../constants/routes";
-import {
-  updateCartItemAction,
-  deleteCartItemAction,
-} from "../../../../../redux/actions";
 import CartItem from "../CartItem";
 import {
   calcTotalPrice,
@@ -28,8 +13,8 @@ import * as S from "./styles";
 
 const Cart = ({ setStep }) => {
   const navigate = useNavigate();
-
   const { cartList } = useSelector((state) => state.cart);
+  const { productList } = useSelector((state) => state.product);
 
   return (
     <>
@@ -74,6 +59,8 @@ const Cart = ({ setStep }) => {
                           style={{ backgroundColor: "#fff" }}
                           key={index}
                           cartInfo={item}
+                          cartList={cartList}
+                          productList={productList}
                         />
                       );
                     })}

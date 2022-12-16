@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { generatePath, useNavigate, Link } from "react-router-dom";
-import { Tooltip, notification, Modal, Button } from "antd";
+import { Tooltip, notification, Modal, Popconfirm } from "antd";
 import { deleteCartItemAction } from "../../../../../redux/actions";
 import {
   calcTotalPrice,
@@ -29,10 +29,10 @@ const CartDropDown = ({ cartList }) => {
             })
           );
           notification.warn({
-            message: "Đã xoá sản phẩm khỏi giỏ hàng",
+            message: "Đã xóa sản phẩm vào giỏ hàng",
             placement: "top",
             top: 100,
-            duration: 1,
+            duration: 2,
           });
         },
       });
