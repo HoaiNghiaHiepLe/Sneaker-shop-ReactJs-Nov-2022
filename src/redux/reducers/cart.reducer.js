@@ -6,6 +6,7 @@ const initialState = {
   cartList: JSON.parse(localStorage.getItem("cart")) || [],
   checkoutInfo: {},
   checkoutPayment: {},
+  checkoutCoupon: {},
 };
 
 const cartReducer = createReducer(initialState, {
@@ -115,6 +116,15 @@ const cartReducer = createReducer(initialState, {
     };
   },
 
+  [REQUEST(CART_ACTION.SET_COUPON_INFO)]: (state, action) => {
+    const { data } = action.payload;
+
+    return {
+      ...state,
+      checkoutCoupon: data,
+    };
+  },
+
   [REQUEST(CART_ACTION.SET_CHECKOUT_INFO)]: (state, action) => {
     return {
       ...state,
@@ -126,6 +136,9 @@ const cartReducer = createReducer(initialState, {
     return {
       ...state,
       cartList: [],
+      checkoutInfo: {},
+      checkoutPayment: {},
+      checkoutCoupon: {},
     };
   },
 });

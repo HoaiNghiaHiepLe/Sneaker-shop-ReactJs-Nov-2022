@@ -10,6 +10,9 @@ export const ROUTES = {
     PRODUCT_DETAILS: "/products/:id",
     CHECKOUT: "/checkout",
     PROFILE: "/profile",
+    ORDER_HISTORY: "/profile/order-history",
+    WISHLIST: "/profile/wish-list",
+    PASSWORD_CHANGE: "/profile/password",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",

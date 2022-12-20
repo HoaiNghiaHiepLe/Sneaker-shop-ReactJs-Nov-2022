@@ -9,6 +9,10 @@ export const TITLES = {
     PRODUCT_LIST: "Danh sách Sản phẩm",
     PRODUCT_DETAILS: "Chi tiết sản phẩm",
     CHECKOUT: "Thanh toán",
+    PROFILE: "Thông tin cá nhân",
+    ORDER_HISTORY: "Lịch sử đơn hàng",
+    WISHLIST: "Sản phẩm yêu thích",
+    PASSWORD_CHANGE: "Thay đổi mật khẩu",
   },
   ADMIN: {
     DASHBOARD: "Admin | Trang quản lý",

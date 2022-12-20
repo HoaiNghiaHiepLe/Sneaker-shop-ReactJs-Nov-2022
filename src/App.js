@@ -28,6 +28,9 @@ import CheckoutPage from "./pages/User/CheckoutPage";
 import UserProductListPage from "./pages/User/ProductListPage";
 import ProductDetailPage from "./pages/User/ProductDetailPage";
 import ProfilePage from "./pages/User/ProfilePage";
+import OrderHistory from "./pages/User/ProfilePage/components/OrderHistory";
+import PasswordChange from "./pages/User/ProfilePage/components/PasswordChange";
+import WishList from "./pages/User/ProfilePage/components/WishList";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -129,6 +132,15 @@ function App() {
             element={<ProductDetailPage />}
           ></Route>
           <Route path={ROUTES.USER.PROFILE} element={<ProfilePage />}></Route>
+          <Route
+            path={ROUTES.USER.ORDER_HISTORY}
+            element={<OrderHistory />}
+          ></Route>
+          <Route path={ROUTES.USER.WISHLIST} element={<WishList />}></Route>
+          <Route
+            path={ROUTES.USER.PASSWORD_CHANGE}
+            element={<PasswordChange />}
+          ></Route>
         </Route>
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<LoginPage />}></Route>

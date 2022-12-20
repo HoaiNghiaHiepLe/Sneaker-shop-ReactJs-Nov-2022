@@ -29,6 +29,8 @@ const Payment = ({ setStep }) => {
   const [checked, setChecked] = useState("");
   const dispatch = useDispatch();
   const { cartList, checkoutInfo } = useSelector((state) => state.cart);
+  console.log("🚀 ~ file: index.jsx:32 ~ Payment ~ cartList", cartList);
+  console.log("🚀 ~ file: index.jsx:32 ~ Payment ~ checkoutInfo", checkoutInfo);
 
   const { userInfo } = useSelector((state) => state.user);
 
@@ -48,8 +50,13 @@ const Payment = ({ setStep }) => {
           products: cartList.map((item) => ({
             productId: item.productId,
             productName: item.productName,
-            discount: item.discount,
+            productBrand: item.productBrand,
+            productImage: item.image,
+            optionId: item.optionId,
+            optionName: item.optionName,
+            size: item.size,
             price: item.price,
+            discount: item.discount,
             quantity: item.quantity,
           })),
         })
@@ -63,7 +70,14 @@ const Payment = ({ setStep }) => {
           status: "pending",
           products: cartList.map((item) => ({
             productId: item.productId,
+            productName: item.productName,
+            productBrand: item.productBrand,
+            productImage: item.image,
+            optionId: item.optionId,
+            optionName: item.optionName,
+            size: item.size,
             price: item.price,
+            discount: item.discount,
             quantity: item.quantity,
           })),
         })
