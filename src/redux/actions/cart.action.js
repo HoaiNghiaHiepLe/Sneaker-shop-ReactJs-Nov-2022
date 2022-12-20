@@ -12,6 +12,9 @@ export const changeCartItemAction = createAction(
 export const deleteCartItemAction = createAction(
   REQUEST(CART_ACTION.DELETE_CART_ITEM)
 );
+export const setCouponInfoAction = createAction(
+  REQUEST(CART_ACTION.SET_COUPON_INFO)
+);
 export const setCheckoutInfoAction = createAction(
   REQUEST(CART_ACTION.SET_CHECKOUT_INFO)
 );

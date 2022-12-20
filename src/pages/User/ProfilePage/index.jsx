@@ -26,20 +26,13 @@ import {
   getFavoriteList,
 } from "../../../redux/actions";
 
+import { ROUTES, TITLES } from "../../../constants/";
 import * as S from "./styles";
 
 const ProfilePage = () => {
   const { userInfo } = useSelector((state) => state.user);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 33 ~ ProfilePage ~ userInfo",
-    userInfo.data.password
-  );
-
   const { orderList } = useSelector((state) => state.order);
-
   const { cartList } = useSelector((state) => state.cart);
-
-  const { productDetail } = useSelector((state) => state.product);
 
   const [available, setAvailable] = useState(false);
   const [currentKey, setCurrentKey] = useState(undefined);
@@ -48,6 +41,7 @@ const ProfilePage = () => {
   const [changePassForm] = Form.useForm();
 
   useEffect(() => {
+    document.title = TITLES.USER.PROFILE;
     if (userInfo.data.id) {
       dispatch(getUserDetailAction({ id: userInfo.data.id }));
     }
@@ -99,12 +93,12 @@ const ProfilePage = () => {
       const key = index + 1;
       return (
         <S.MenuItem
-          key={key}
+          key={index}
           icon={item.icon}
           onClick={() => setCurrentKey(key)}
-          active={key === currentKey}
+          $active={key === currentKey}
         >
-          {<span>{item.label}</span>}
+          {<span>{item.title}</span>}
         </S.MenuItem>
       );
     });

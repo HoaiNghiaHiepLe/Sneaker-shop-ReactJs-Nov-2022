@@ -162,19 +162,19 @@ const CartItem = ({ cartList, cartInfo, productList }) => {
             <div className="item_brand">{cartInfo.productBrand}</div>
           </Col>
           <Col span={3}>
-            <Tooltip title="Đổi size sản phẩm">
-              <div
-                id={cartInfo.optionId}
-                onClick={(event) => {
-                  setShowModal(true);
-                  setOnClickId(event.currentTarget.id);
-                }}
-                className="item_size"
-              >
-                {cartInfo.size}
+            <div
+              id={cartInfo.optionId}
+              onClick={(event) => {
+                setShowModal(true);
+                setOnClickId(event.currentTarget.id);
+              }}
+              className="item_size"
+            >
+              <Tooltip className="size_tooltip" title="Đổi size sản phẩm">
+                <span>{cartInfo.size}</span>
                 <S.SizeSelectorIcon $showModal={showModal} />
-              </div>
-            </Tooltip>
+              </Tooltip>
+            </div>
             <Modal
               title="Chọn size sản phẩm"
               centered

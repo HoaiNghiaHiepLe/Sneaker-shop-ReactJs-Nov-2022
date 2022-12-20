@@ -129,7 +129,10 @@ export const CartItemWrapper = styled.div`
   }
   .item_size {
     cursor: pointer;
-    .size_selector {
+    .size_tooltip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;

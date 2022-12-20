@@ -1,16 +1,26 @@
 import { AiOutlineEdit, AiOutlineUser, AiOutlineHistory } from "react-icons/ai";
+import { MdFavoriteBorder } from "react-icons/md";
+import { ROUTES, TITLES } from "../../../constants/";
 
 export const MENU_ITEMS = [
   {
     icon: <AiOutlineUser />,
-    label: "Thông tin cá nhân",
+    title: TITLES.USER.PROFILE,
+    path: ROUTES.USER.PROFILE,
   },
   {
     icon: <AiOutlineHistory />,
-    label: "Lịch sử giao dịch",
+    title: TITLES.USER.ORDER_HISTORY,
+    path: ROUTES.USER.ORDER_HISTORY,
+  },
+  {
+    icon: <MdFavoriteBorder />,
+    title: TITLES.USER.WISHLIST,
+    path: ROUTES.USER.WISHLIST,
   },
   {
     icon: <AiOutlineEdit />,
-    label: "Thay đổi mật khẩu",
+    title: TITLES.USER.PASSWORD_CHANGE,
+    path: ROUTES.USER.PASSWORD_CHANGE,
   },
 ];

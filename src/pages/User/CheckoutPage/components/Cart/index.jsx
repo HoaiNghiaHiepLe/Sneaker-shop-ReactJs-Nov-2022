@@ -44,7 +44,7 @@ const Cart = ({ setStep }) => {
                           <div className="item_quantity">Số lượng</div>
                         </Col>
                         <Col span={3}>
-                          <div className="item_price_total">Số tiền</div>
+                          <div className="item_price_total">Thành tiền</div>
                         </Col>
                         <Col span={2}>
                           <div className="item_action">Thao tác</div>

@@ -53,7 +53,7 @@ export const MenuItem = styled(Menu.Item)`
   font-size: 16px;
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       border-right: 3px solid royalblue;
     `}

@@ -30,9 +30,7 @@ const Info = ({ setStep }) => {
     (state) => state.location
   );
   const { userInfo } = useSelector((state) => state.user);
-  const { cartList } = useSelector((state) => state.cart);
-
-  const productInfo = cartList.map((item) => item);
+  const { checkoutCoupon, cartList } = useSelector((state) => state.cart);
 
   const calcDiscount = (currentPrice, discount) => {
     return currentPrice - (currentPrice * discount) / 100;
@@ -128,7 +126,7 @@ const Info = ({ setStep }) => {
       key: "productName",
       render: (_, record) => {
         return (
-          <Space key={record.productId}>
+          <Space key={record.optionId}>
             <Image
               src={record?.image}
               alt={record?.productName}
@@ -144,9 +142,33 @@ const Info = ({ setStep }) => {
       },
     },
     {
+      title: "Hãng",
+      dataIndex: "productBrand",
+      key: "productBrand",
+      align: "center",
+      render: (_, record) => record.productBrand,
+      responsive: ["md"],
+    },
+    {
       title: "Size",
       dataIndex: "size",
       key: "size",
+    },
+    {
+      title: "Đơn giá",
+      dataIndex: "price",
+      key: "price",
+      render: (_, record) => (
+        <div className="item_price">
+          <s className="prime_price">{record.price.toLocaleString()} đ</s>
+          <span className="item_discount">
+            Tiết kiệm <b> {record.discount}%</b>
+          </span>
+          <span className="final_price_each">
+            {calcDiscount(record.price, record.discount).toLocaleString()}đ
+          </span>
+        </div>
+      ),
     },
     {
       title: "Số lượng",
@@ -154,64 +176,56 @@ const Info = ({ setStep }) => {
       key: "quantity",
     },
     {
-      title: "Giá",
-      dataIndex: "price",
-      key: "price",
-      render: (_, record) => {
-        return `${calcDiscount(
-          record.price,
-          record.discount
-        ).toLocaleString()}đ`;
-      },
-    },
-
-    {
       title: "Thành tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (_, record) =>
-        `${calcPrice(
-          record.quantity,
-          calcDiscount(record.price, record.discount)
-        ).toLocaleString()}đ`,
+      render: (_, record) => (
+        <span className="final_price">{`${calcPrice(
+          calcDiscount(record.price, record.discount),
+          record.quantity
+        ).toLocaleString()}đ`}</span>
+      ),
     },
   ];
+
+  const tableData = cartList.map((item) => ({
+    ...item,
+    key: `${item.productId}${item.optionId && `-${item.optionId}`}`,
+  }));
 
   return (
     <>
       <Row gutter={[16, 16]}>
         <Col span={2}></Col>
         <Col span={20}>
-          <Table
+          <S.CartListTable
             style={{ marginTop: "28px" }}
             bordered
             pagination={false}
             columns={tableColumns}
-            dataSource={productInfo}
-            rowKey="productId"
-            expandable={{
-              expandedRowRender: (record) => (
-                <>
-                  <Space>
-                    <p>
-                      Thương hiệu: <b>{record.productBrand.toUpperCase()}</b>
-                    </p>
-                    <p>{`Giảm giá: ${record.discount}%`}</p>
-                  </Space>
-                </>
-              ),
-            }}
+            dataSource={tableData}
+            footer={() =>
+              checkoutCoupon.discountPrice ? (
+                <h4 style={{ textAlign: "right" }}>
+                  Tổng tiền: {checkoutCoupon.discountPrice?.toLocaleString()}
+                  <sup>đ</sup> (Đã áp dụng mã giảm giá {checkoutCoupon.discount}
+                  %)
+                </h4>
+              ) : (
+                <h4 style={{ textAlign: "right" }}>
+                  Tổng tiền: {calcTotalPrice().toLocaleString()}
+                  <sup>đ</sup>
+                </h4>
+              )
+            }
           />
-          <h3
-            style={{ marginTop: "8px" }}
-          >{`Tổng tiền: ${calcTotalPrice().toLocaleString()}đ`}</h3>
         </Col>
         <Col span={2}></Col>
       </Row>
       <br></br>
       <Row gutter={[16, 16]}>
-        <Col span={8}></Col>
-        <Col span={8}>
+        <Col span={2}></Col>
+        <Col span={20}>
           <Card
             size="small"
             style={{
@@ -387,7 +401,7 @@ const Info = ({ setStep }) => {
           </Card>
         </Col>
 
-        <Col span={8}></Col>
+        <Col span={2}></Col>
       </Row>
     </>
   );
