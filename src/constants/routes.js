@@ -11,7 +11,7 @@ export const ROUTES = {
     CHECKOUT: "/checkout",
     PROFILE: "/profile",
     ORDER_HISTORY: "/profile/order-history",
-    FAVORITE_PRODUCT: "/profile/favorite-product",
+    FAVORITE_LIST: "/profile/favorite-list",
     PASSWORD_CHANGE: "/profile/password",
   },
   ADMIN: {
