@@ -40,12 +40,6 @@ const ProfilePage = () => {
     }
   }, [userInfo.data.id]);
 
-  useEffect(() => {
-    if (userInfo.data.id) {
-      dispatch(getFavoriteList());
-    }
-  }, [userInfo.data.id]);
-
   const initialInfoValues = {
     fullName: userInfo.data.fullName,
     email: userInfo.data.email,

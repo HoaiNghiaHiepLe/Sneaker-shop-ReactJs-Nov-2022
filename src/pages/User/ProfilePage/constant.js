@@ -15,8 +15,8 @@ export const MENU_ITEMS = [
   },
   {
     icon: <MdFavoriteBorder />,
-    title: TITLES.USER.FAVORITE_PRODUCT,
-    path: ROUTES.USER.FAVORITE_PRODUCT,
+    title: TITLES.USER.FAVORITE_LIST,
+    path: ROUTES.USER.FAVORITE_LIST,
   },
   {
     icon: <AiOutlineEdit />,

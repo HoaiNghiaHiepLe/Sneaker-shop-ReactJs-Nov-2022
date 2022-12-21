@@ -31,7 +31,7 @@ import UserProfileLayout from "./pages/User/ProfilePage/Layout/userProfileLayout
 import ProfilePage from "./pages/User/ProfilePage";
 import OrderHistory from "./pages/User/ProfilePage/components/OrderHistory";
 import PasswordChange from "./pages/User/ProfilePage/components/PasswordChange";
-import FavoriteProduct from "./pages/User/ProfilePage/components/FavoriteProduct";
+import FavoriteList from "./pages/User/ProfilePage/components/FavoriteList";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -139,8 +139,8 @@ function App() {
               element={<OrderHistory />}
             ></Route>
             <Route
-              path={ROUTES.USER.FAVORITE_PRODUCT}
-              element={<FavoriteProduct />}
+              path={ROUTES.USER.FAVORITE_LIST}
+              element={<FavoriteList />}
             ></Route>
             <Route
               path={ROUTES.USER.PASSWORD_CHANGE}
