@@ -182,38 +182,6 @@ const userReducer = createReducer(initialState, {
       },
     };
   },
-  [REQUEST(USER_ACTION.GET_USER_DETAIL)]: (state, action) => {
-    return {
-      ...state,
-      userDetail: {
-        ...state.userDetail,
-        loading: true,
-        error: "",
-      },
-    };
-  },
-  [SUCCESS(USER_ACTION.GET_USER_DETAIL)]: (state, action) => {
-    const { data } = action.payload;
-    return {
-      ...state,
-      userDetail: {
-        ...state.userDetail,
-        data: data,
-        loading: false,
-      },
-    };
-  },
-  [FAIL(USER_ACTION.GET_USER_DETAIL)]: (state, action) => {
-    const { error } = action.payload;
-    return {
-      ...state,
-      userDetail: {
-        ...state.userDetail,
-        loading: false,
-        error: error,
-      },
-    };
-  },
 
   [REQUEST(USER_ACTION.UPDATE_USER)]: (state, action) => {
     return {

@@ -16,12 +16,7 @@ import {
 import { CheckCircleTwoTone } from "@ant-design/icons";
 
 import moment from "moment";
-import {
-  getUserDetailAction,
-  updateUserAction,
-  getOrderListAction,
-  getFavoriteList,
-} from "../../../../../redux/actions";
+import { updateUserAction } from "../../../../../redux/actions";
 import { ROUTES, TITLES } from "../../../../../constants/";
 import * as S from "./styles";
 

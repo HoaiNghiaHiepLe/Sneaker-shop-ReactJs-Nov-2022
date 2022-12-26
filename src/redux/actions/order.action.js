@@ -11,3 +11,6 @@ export const guestOrderProductAction = createAction(
 export const getOrderListAction = createAction(
   REQUEST(ORDER_ACTION.GET_ORDER_LIST)
 );
+export const changeOrderStatusAction = createAction(
+  REQUEST(ORDER_ACTION.CHANGE_ORDER_STATUS)
+);

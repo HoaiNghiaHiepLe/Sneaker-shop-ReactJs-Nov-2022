@@ -111,29 +111,9 @@ function* getUserListSaga(action) {
   }
 }
 
-function* getUserDetailSaga(action) {
-  try {
-    const { id } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/users/${id}`);
-    yield put({
-      type: SUCCESS(USER_ACTION.GET_USER_DETAIL),
-      payload: {
-        data: result.data,
-      },
-    });
-  } catch (e) {
-    yield put({
-      type: FAIL(USER_ACTION.GET_USER_DETAIL),
-      payload: {
-        error: "Đã có lỗi xảy ra!",
-      },
-    });
-  }
-}
-
 function* updateUserSaga(action) {
   try {
-    const { values, id } = action.payload;
+    const { values, id, callback } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/users/${id}`,
       values
@@ -145,6 +125,9 @@ function* updateUserSaga(action) {
         data: result.data,
       },
     });
+    if (callback.openMessage) yield callback.openMessage();
+    if (callback.getUserInfo) yield callback.getUserInfo();
+    if (callback.closeModal) yield callback.closeModal();
   } catch (e) {
     yield put({
       type: FAIL(USER_ACTION.UPDATE_USER),
@@ -175,7 +158,6 @@ export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserListSaga);
-  yield takeEvery(REQUEST(USER_ACTION.GET_USER_DETAIL), getUserDetailSaga);
   yield takeEvery(REQUEST(USER_ACTION.UPDATE_USER), updateUserSaga);
   yield takeEvery(REQUEST(USER_ACTION.DELETE_USER), deleteUserSaga);
 }

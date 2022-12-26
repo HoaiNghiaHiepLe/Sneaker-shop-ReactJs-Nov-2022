@@ -83,11 +83,43 @@ function* getOrderListSaga(action) {
   }
 }
 
+function* changeOrderStatusSaga(action) {
+  try {
+    const { id, data, callback, userId } = action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/orders/${id}`,
+      data
+    );
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.CHANGE_ORDER_STATUS)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    // if (data.status === "done" && callback.updateUserInfo)
+    //   yield callback.updateUserInfo();
+    if (callback.updateUserInfo) yield callback.updateUserInfo();
+    if (callback.goToList) yield callback.goToList();
+    if (callback.getOrderList) yield callback.getOrderList();
+  } catch (e) {
+    yield put({
+      type: `${FAIL(ORDER_ACTION.CHANGE_ORDER_STATUS)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
   yield takeEvery(
     REQUEST(ORDER_ACTION.GUEST_ORDER_PRODUCT),
     guestOrderProductSaga
+  );
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.CHANGE_ORDER_STATUS),
+    changeOrderStatusSaga
   );
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOrderListSaga);
 }
