@@ -10,9 +10,6 @@ export const getUserInfoAction = createAction(
 export const getUserListAction = createAction(
   REQUEST(USER_ACTION.GET_USER_LIST)
 );
-export const getUserDetailAction = createAction(
-  REQUEST(USER_ACTION.GET_USER_DETAIL)
-);
 export const updateUserAction = createAction(REQUEST(USER_ACTION.UPDATE_USER));
 export const deleteUserAction = createAction(REQUEST(USER_ACTION.DELETE_USER));
 export const clearUserDetailAction = createAction(

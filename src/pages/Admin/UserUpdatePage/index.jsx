@@ -23,7 +23,7 @@ import { onPreview, convertImageToBase64 } from "../../../utils/function/file";
 import { ROUTES, TITLES } from "../../../constants";
 import {
   updateUserAction,
-  getUserDetailAction,
+  getUserInfoAction,
   clearUserDetailAction,
 } from "../../../redux/actions";
 
@@ -45,7 +45,7 @@ const AdminUserUpdatePage = () => {
   const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getUserDetailAction({ id: id }));
+    dispatch(getUserInfoAction({ id: id }));
     document.title = TITLES.ADMIN.USER_UPDATE;
   }, [id]);
 

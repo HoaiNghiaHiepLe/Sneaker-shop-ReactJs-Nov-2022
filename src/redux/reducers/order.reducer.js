@@ -8,6 +8,10 @@ const initialState = {
     loading: false,
     error: "",
   },
+  changeOrderData: {
+    loading: false,
+    error: "",
+  },
 };
 
 const orderReducer = createReducer(initialState, {
@@ -38,6 +42,38 @@ const orderReducer = createReducer(initialState, {
       ...state,
       orderList: {
         ...state.orderList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(ORDER_ACTION.CHANGE_ORDER_STATUS)]: (state, action) => {
+    return {
+      ...state,
+      changeOrderData: {
+        ...state.changeOrderData,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(ORDER_ACTION.CHANGE_ORDER_STATUS)]: (state, action) => {
+    return {
+      ...state,
+      changeOrderData: {
+        ...state.changeOrderData,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(ORDER_ACTION.CHANGE_ORDER_STATUS)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      changeOrderData: {
+        ...state.changeOrderData,
         loading: false,
         error: error,
       },

@@ -30,8 +30,6 @@ const Payment = ({ setStep }) => {
   const dispatch = useDispatch();
   const { cartList, checkoutInfo } = useSelector((state) => state.cart);
   console.log("🚀 ~ file: index.jsx:32 ~ Payment ~ cartList", cartList);
-  console.log("🚀 ~ file: index.jsx:32 ~ Payment ~ checkoutInfo", checkoutInfo);
-
   const { userInfo } = useSelector((state) => state.user);
 
   const totalPrice = cartList
