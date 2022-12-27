@@ -29,7 +29,6 @@ const Payment = ({ setStep }) => {
   const [checked, setChecked] = useState("");
   const dispatch = useDispatch();
   const { cartList, checkoutInfo } = useSelector((state) => state.cart);
-  console.log("🚀 ~ file: index.jsx:32 ~ Payment ~ cartList", cartList);
   const { userInfo } = useSelector((state) => state.user);
 
   const totalPrice = cartList

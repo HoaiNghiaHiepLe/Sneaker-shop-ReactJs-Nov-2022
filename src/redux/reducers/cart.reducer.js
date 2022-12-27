@@ -133,6 +133,8 @@ const cartReducer = createReducer(initialState, {
   },
 
   [REQUEST(CART_ACTION.RESET_CART_LIST)]: (state, action) => {
+    localStorage.setItem("cart", JSON.stringify([]));
+
     return {
       ...state,
       cartList: [],
