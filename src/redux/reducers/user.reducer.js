@@ -23,6 +23,10 @@ const initialState = {
     loading: false,
     error: "",
   },
+  changePasswordData: {
+    loading: false,
+    error: "",
+  },
   deleteUserData: {
     loading: false,
     error: "",
@@ -210,6 +214,35 @@ const userReducer = createReducer(initialState, {
         ...state.updateUserData,
         loading: false,
         error: error,
+      },
+    };
+  },
+
+  [REQUEST(USER_ACTION.CHANGE_USER_PASSWORD)]: (state, action) => {
+    return {
+      ...state,
+      changePasswordData: {
+        ...state.changePasswordData,
+        loading: true,
+      },
+    };
+  },
+  [SUCCESS(USER_ACTION.CHANGE_USER_PASSWORD)]: (state, action) => {
+    return {
+      ...state,
+      changePasswordData: {
+        ...state.changePasswordData,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(USER_ACTION.CHANGE_USER_PASSWORD)]: (state, action) => {
+    return {
+      ...state,
+      changePasswordData: {
+        ...state.changePasswordData,
+        loading: false,
+        error: action.payload,
       },
     };
   },

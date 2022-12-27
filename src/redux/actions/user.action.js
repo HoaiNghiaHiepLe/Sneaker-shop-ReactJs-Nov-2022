@@ -11,6 +11,9 @@ export const getUserListAction = createAction(
   REQUEST(USER_ACTION.GET_USER_LIST)
 );
 export const updateUserAction = createAction(REQUEST(USER_ACTION.UPDATE_USER));
+export const changeUserPasswordAction = createAction(
+  REQUEST(USER_ACTION.CHANGE_USER_PASSWORD)
+);
 export const deleteUserAction = createAction(REQUEST(USER_ACTION.DELETE_USER));
 export const clearUserDetailAction = createAction(
   REQUEST(USER_ACTION.CLEAR_USER_DETAIL)

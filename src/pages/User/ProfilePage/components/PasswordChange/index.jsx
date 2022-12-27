@@ -15,46 +15,58 @@ import {
 } from "antd";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 
-import moment from "moment";
-import { updateUserAction } from "../../../../../redux/actions";
+import {
+  updateUserAction,
+  changeUserPasswordAction,
+} from "../../../../../redux/actions";
 import { ROUTES, TITLES } from "../../../../../constants/";
 import * as S from "./styles";
 
 const PasswordChange = () => {
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, changePasswordData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [available, setAvailable] = useState(false);
   const [changePassForm] = Form.useForm();
+
   useEffect(() => {
     document.title = TITLES.USER.PASSWORD_CHANGE;
-    if (userInfo.data.id) {
-      changePassForm.resetFields();
+    if (changePasswordData.error) {
+      changePassForm.setFields([
+        {
+          name: "password",
+          errors: [changePasswordData.error],
+        },
+      ]);
     }
-  }, []);
-  const handleNotification = (description) => {
-    notification.open({
-      message: "Thông báo",
-      description: description,
-      icon: <CheckCircleTwoTone />,
-    });
-  };
-  const handleSubmitChangePass = (values) => {
+    return () => {
+      changePassForm.resetFields();
+    };
+  }, [changePasswordData.error]);
+
+  const handleChangeUserPassWord = (values) => {
+    const { password, newPassword } = values;
+
     dispatch(
-      updateUserAction({
-        id: userInfo.data.id,
-        password: values,
+      changeUserPasswordAction({
+        data: {
+          email: userInfo.data.email,
+          password,
+        },
+        newPassword,
+        callback: {
+          resetFields: () => {
+            changePassForm.resetFields();
+          },
+          showMessage: () => {
+            notification.success({
+              message: "Thành công",
+              description: "Mật khẩu của bạn đã được thay đổi",
+            });
+          },
+        },
       })
     );
-    setAvailable(true);
-    changePassForm.resetFields();
-    handleNotification("Thay đổi mật khẩu thành công!");
   };
-  const initialUserInfoValues = {
-    email: userInfo.data.email,
-    password: "",
-    newPassword: "",
-    confirmNewPassword: "",
-  };
+
   return (
     <S.PasswordChangeContainer>
       <S.FormTitle>Thay đổi mật khẩu</S.FormTitle>
@@ -62,63 +74,62 @@ const PasswordChange = () => {
         form={changePassForm}
         name="changePassForm"
         layout="vertical"
-        initialValues={initialUserInfoValues}
-        onFinish={(values) => handleSubmitChangePass(values.newPassword)}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={(values) => handleChangeUserPassWord(values)}
         autoComplete="off"
         style={{ padding: "0 2px" }}
       >
-        <Form.Item label="Email" name="email">
-          <Input disabled />
-        </Form.Item>
-
         <Form.Item
           label="Mật khẩu hiện tại"
           name="password"
-          dependencies={["password"]}
           rules={[
             {
               required: true,
               message: "Please enter your password!",
             },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (
-                  value &&
-                  getFieldValue("password") === userInfo.data.password
-                ) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Password is wrong!"));
-              },
-            }),
           ]}
         >
-          <Input type="password" />
+          <Input.Password />
         </Form.Item>
         <Form.Item
           label="Mật khẩu mới"
           name="newPassword"
+          dependencies={["password"]}
+          hasFeedback
           rules={[
             {
               required: true,
-              message: "This field is required!",
+              message: "Hãy nhập mật khẩu mới của bạn",
             },
             {
               min: 6,
-              message: "This field must contain at least 6 character!",
+              message: "Mật khẩu phải có ít nhất 6 kí tự",
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") !== value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("Mật khẩu mới không được trùng với mật khẩu cũ!")
+                );
+              },
+            }),
           ]}
         >
-          <Input type="password" />
+          <Input.Password />
         </Form.Item>
         <Form.Item
           label="Xác nhận mật khẩu mới"
           name="confirmNewPassword"
           dependencies={["newPassword"]}
+          hasFeedback
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Hãy xác nhận mật khẩu mới!",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -126,19 +137,19 @@ const PasswordChange = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
+                  new Error("Mật khẩu vừa nhập không trùng khớp!")
                 );
               },
             }),
           ]}
         >
-          <Input type="password" />
+          <Input.Password />
         </Form.Item>
-        {available === false && (
-          <Button type="primary" block onClick={() => changePassForm.submit()}>
-            Lưu thay đổi
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Xác nhận
           </Button>
-        )}
+        </Form.Item>
       </Form>
     </S.PasswordChangeContainer>
   );
