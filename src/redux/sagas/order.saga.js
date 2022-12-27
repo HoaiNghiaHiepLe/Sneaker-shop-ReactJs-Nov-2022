@@ -1,7 +1,13 @@
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
-import { ORDER_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
+import {
+  ORDER_ACTION,
+  CART_ACTION,
+  REQUEST,
+  SUCCESS,
+  FAIL,
+} from "../constants";
 
 function* orderProductSaga(action) {
   try {
@@ -18,6 +24,9 @@ function* orderProductSaga(action) {
       payload: {
         data: result.data,
       },
+    });
+    yield put({
+      type: REQUEST(CART_ACTION.RESET_CART_LIST),
     });
   } catch (e) {
     yield put({
@@ -47,6 +56,9 @@ function* guestOrderProductSaga(action) {
       payload: {
         data: result.data,
       },
+    });
+    yield put({
+      type: REQUEST(CART_ACTION.RESET_CART_LIST),
     });
   } catch (e) {
     yield put({

@@ -270,7 +270,7 @@ const OrderHistory = () => {
                                 {item.price.toLocaleString()} đ
                               </s>
                               <span className="item_discount">
-                                Tiết kiệm <b> {item.discount}%</b>
+                                Đã giảm <b> {item.discount}%</b>
                               </span>
                               <span className="final_price_each">
                                 {calcDiscount(
