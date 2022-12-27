@@ -30,7 +30,6 @@ const OrderHistory = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   const { orderList } = useSelector((state) => state.order);
-  console.log("🚀 ~ file: index.jsx:29 ~ OrderHistory ~ orderList", orderList);
   useEffect(() => {
     document.title = TITLES.USER.ORDER_HISTORY;
   }, []);
